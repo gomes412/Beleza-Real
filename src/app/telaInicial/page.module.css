@@ -1,0 +1,43 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #eac5c5; 
+}
+
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+.flower {
+  width: 80px; 
+  height: auto;
+  margin-bottom: 15px;
+}
+
+
+.title {
+  font-family: "Cursive", "Great Vibes", serif;
+  font-size: 100px;
+  color: #2c2c2c;
+  margin-bottom: 15px;
+}
+
+
+.subtitle {
+  font-size: 18px;
+  color: #444;
+}

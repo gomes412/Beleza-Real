@@ -1,0 +1,133 @@
+.container {
+  background: #f4dede;
+  min-height: 100vh;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  font-family: serif;
+}
+
+/* header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileName {
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.title {
+  font-size: 1.6rem;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+  color: #3b2f2f;
+}
+
+.rightHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addBtn {
+  background: #fff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 1px 1px 5px #bbbbbb30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px #bbbbbb30;
+  text-decoration: none;
+  color: inherit;
+}
+
+.homeIcon {
+  font-size: 1.2rem;
+}
+
+/* conteúdo principal */
+.main {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.subTitle {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #4a2f2f;
+}
+
+.year {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* grid dos meses */
+.gridMeses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cardMes {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 1px 2px 6px #bca2a2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.cardMes:hover {
+  transform: scale(1.05);
+}
+
+.imgMes {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}

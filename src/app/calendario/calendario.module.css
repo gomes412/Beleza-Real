@@ -1,0 +1,155 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #EAC5C5;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* TOPO */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 900px;
+  margin-bottom: 50px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  font-size: 1.5rem;
+  color: #6b4c4c;
+}
+
+.headerIcons {
+  display: flex;
+  gap: 10px;
+}
+
+.headerIcon {
+  font-size: 1.9rem;
+  text-decoration: none;
+  color: #4a2e2e;
+}
+
+.iconImage {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* TÍTULO */
+.title {
+  font-size: 2rem;
+  color: #4a2e2e;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* GRID DE BOTÕES */
+.grid {
+  display: flex;
+  gap: 50px; /* Diminuí o espaço entre as colunas */
+  flex-wrap: wrap; /* Permite que os itens se ajustem responsivamente */
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #4a2e2e;
+  padding: 10px;
+  width: 120px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar o mouse */
+}
+
+.card img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border-radius: 12px;
+}
+
+.card span {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* BOTÃO SALVAR */
+.saveButton {
+  background: #d9a5b3;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 20px 90px;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-block;
+  margin-top: 30px; /* Distância do botão de salvar */
+}
+
+.saveButton:hover {
+  background: #c58a9d;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    align-items: center;
+    gap: 20px;
+  }
+
+  .card {
+    width: 150px; /* Tamanho maior dos cards em telas menores */
+  }
+
+  .saveButton {
+    padding: 15px 60px; /* Ajuste de tamanho do botão em telas menores */
+  }
+}
