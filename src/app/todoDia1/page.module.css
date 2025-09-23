@@ -76,18 +76,13 @@
 
 
 /* link da home (aplica mesmo estilo do botão) */
-.homeLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 1px 1px 5px #bbbbbb30;
-  text-decoration: none;
-  color: inherit;
+.homeLink img {
+  width: 38px;   /* ajuste o tamanho que quiser */
+  height: 38px;
+  border-radius: 50%; /* deixa arredondado */
+  object-fit: cover;
 }
+
 
 
 .homeIcon {

@@ -1,63 +1,71 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./page.module.css";
 
-export default function Personalizar1Page() {
+const PersonalizarUnhas = () => {
   const anoAtual = new Date().getFullYear();
 
   return (
     <div className={styles.container}>
-      {/* Cabeçalho */}
+      {/* Header */}
       <header className={styles.header}>
-        <div className={styles.logo}>
-          <Image
-            src="https://images.vexels.com/media/users/3/215769/isolated/lists/a5881bb5f5064d8d6a4f539936496097-desenho-de-linha-de-rosa-com-folha-unica.png"
-            alt="Logo BR"
-            width={40}
-            height={40}
-          />
-          <span className={styles.brand}>BR</span>
+        <div className={styles.user}>
+          <span className={styles.userIcon}>👤</span>
+          <span className={styles.userName}>Anne Karine</span>
         </div>
 
-        <nav className={styles.nav}>
-          <Link href="/" className={styles.navButton}>
-            Home
+        <div className={styles.icons}>
+          <Link href="/home">
+            <button className={styles.iconBtn}>🏠</button>
           </Link>
-          <Link href="/config" className={styles.navButton}>
-            Configurações
+          <Link href="/configuracoes">
+            <button className={styles.iconBtn}>⚙️</button>
           </Link>
-          <Image
-            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-            alt="Usuário"
-            width={35}
-            height={35}
-          />
-        </nav>
+        </div>
       </header>
 
-      {/* Conteúdo */}
+      {/* Flor */}
+      <div className={styles.imageContainer}>
+        <img
+          src="https://images.vexels.com/media/users/3/215769/isolated/lists/a5881bb5f5064d8d6a4f539936496097-desenho-de-linha-de-rosa-com-folha-unica.png"
+          alt="Flor rosa"
+          className={styles.flower}
+        />
+      </div>
+
+      {/* Título maior */}
       <h1 className={styles.title}>
         Personalize a data: selecione a data do seu cuidado
       </h1>
-      <h2 className={styles.year}>{anoAtual}</h2>
 
-      {/* Grade de meses */}
-      <div className={styles.monthsGrid}>
-        <Link
-          href="https://png.pngtree.com/png-clipart/20240219/original/pngtree-2025-january-portuguese-monthly-calendar-vector-png-image_14355147.png"
-          target="_blank"
-          className={styles.monthCard}
-        >
-          <Image
-            src="https://png.pngtree.com/png-clipart/20240219/original/pngtree-2025-january-portuguese-monthly-calendar-vector-png-image_14355147.png"
-            alt="Janeiro 2025"
-            width={200}
-            height={200}
-            className={styles.monthImage}
-          />
-          <span className={styles.monthName}>Janeiro</span>
-        </Link>
+      {/* Ano dinâmico */}
+      <h3 className={styles.ano}>{anoAtual}</h3>
+
+      {/* Calendário de meses */}
+      <div className={styles.meses}>
+        {[
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro",
+        ].map((mes, index) => (
+          <Link key={index} href={`/${mes.toLowerCase()}`}>
+            <button className={styles.mesBtn}>{mes}</button>
+          </Link>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default PersonalizarUnhas;
