@@ -3,32 +3,31 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
 export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
 
-
   const router = useRouter();
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (!nome || !email || !senha) {
       setErro("Preencha todos os campos para criar a conta!");
       return;
     }
 
+    // Salva o nome no LocalStorage para uso nas outras telas
+    localStorage.setItem("usuarioNome", nome);
 
     setErro("");
     alert(`Conta criada com sucesso!\nBem-vinda, ${nome}!`);
+
+    // Redireciona para a tela de calendário
     router.push("/calendario");
   };
-
 
   return (
     <div className={styles.container}>
@@ -44,7 +43,6 @@ export default function Cadastro() {
             Organize sua rotina, realce sua essência!
           </p>
         </div>
-
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <input
@@ -69,15 +67,12 @@ export default function Cadastro() {
             className={styles.input}
           />
 
-
           {erro && <p className={styles.error}>{erro}</p>}
-
 
           <button type="submit" className={styles.button}>
             Criar conta
           </button>
         </form>
-
 
         <p className={styles.link}>
           Já é usuário? <a href="/login">Faça login</a>

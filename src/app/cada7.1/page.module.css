@@ -1,0 +1,211 @@
+.container {
+  background: #d3b4b4;
+  min-height: 100vh;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 520px;
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+
+/* header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+
+/* perfil com logo bonequinha + nome */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.profileName {
+  font-family: serif;
+  font-size: 1.05rem;
+  color: #222;
+}
+
+
+/* título central */
+.title {
+  font-size: 2rem;
+  font-family: serif;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+
+/* right header (add + home) */
+.rightHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.addBtn {
+  background: #fff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.4rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 1px 1px 5px #bbbbbb30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* link da home (aplica mesmo estilo do botão) */
+.homeLink img {
+  width: 38px;   /* ajuste o tamanho que quiser */
+  height: 38px;
+  border-radius: 50%; /* deixa arredondado */
+  object-fit: cover;
+}
+
+
+
+.homeIcon {
+  font-size: 1.2rem;
+}
+
+
+/* lista */
+.listSection {
+  margin-top: 24px;
+}
+
+
+.cuidadosList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.cuidadoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c7a6a6;
+  padding: 10px 0;
+  font-family: serif;
+  font-size: 1.12rem;
+  cursor: pointer;
+}
+
+
+.cuidadoText {
+  flex: 1;
+}
+
+
+/* ações do item */
+.itemActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+
+.duvidaBtn {
+  background: #ebeaea;
+  border-radius: 50%;
+  border: none;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 2px #aaa;
+}
+
+
+/* excluir */
+.excluirBtn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #b84c4c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 1px 2px 4px #bca2a2;
+}
+
+
+/* adicionar */
+.addSection {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+
+.input {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #cbb;
+  background: #fff;
+  outline: none;
+  flex: 1;
+}
+
+
+.confirmAddBtn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #b18b8b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 1px 2px 4px #bca2a2;
+}
+
+
+.cancelAddBtn {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #fff;
+  color: #b18b8b;
+  border: 1px solid #cbb;
+  cursor: pointer;
+}
+
+
+/* salvar (link estilizado) */
+.salvarBtn {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: serif;
+  padding: 10px 24px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1.2px solid #b18b8b;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  margin-left: auto;
+}

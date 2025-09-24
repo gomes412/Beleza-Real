@@ -18,7 +18,9 @@
 }
 
 .userIcon {
-  font-size: 20px;
+  width: 35px; /* tamanho da bonequinha */
+  height: 35px;
+  border-radius: 50%;
 }
 
 .userName {
@@ -30,10 +32,10 @@
   gap: 10px;
 }
 
-.iconBtn {
-  background: none;
-  border: none;
-  font-size: 22px;
+.iconImg {
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -49,12 +51,12 @@
 
 .title {
   margin-top: 20px;
-  font-size: 24px; /* maior que antes */
+  font-size: 24px;
   font-weight: bold;
 }
 
 .ano {
-  margin: 15px 0;
+  margin: 10px 0;
   font-size: 18px;
   font-weight: bold;
 }
@@ -62,19 +64,19 @@
 .meses {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 20px 0;
+  gap: 4px; /* mais próximo */
+  margin: 10px 0;
 }
 
-.mesBtn {
-  padding: 10px;
-  border: 1px solid #000;
-  border-radius: 8px;
+.mesImg {
+  width: 280px;
+  height: auto;
   cursor: pointer;
-  background-color: #f9f9f9;
-  font-size: 16px;
+  border-radius: 10px;
+  transition: transform 0.2s;
+  margin: 0 auto;
 }
 
-.mesBtn:hover {
-  background-color: #ffe6f0;
+.mesImg:hover {
+  transform: scale(1.08);
 }

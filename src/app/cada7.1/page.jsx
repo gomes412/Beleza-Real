@@ -5,9 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+// Lista inicial de cuidados (a cada 7 dias)
 const cuidadosDefault = [
-  "Lavar Bem as Mãos e Pés",
-  "Hidratante Para Mãos e Pés",
+  "Cortar",
+  "Lixar",
+  "Empurrar cutículas",
+  "Hidratar cutículas",
+  "Usar base fortalecedora",
 ];
 
 export default function Page() {
@@ -22,7 +26,7 @@ export default function Page() {
 
   // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados");
+    const armazenados = localStorage.getItem("cuidados7dias");
     if (armazenados) {
       setCuidados(JSON.parse(armazenados));
     }
@@ -34,7 +38,7 @@ export default function Page() {
 
   // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem("cuidados", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
@@ -79,7 +83,8 @@ export default function Page() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>Todos os Dias</h1>
+        {/* Título */}
+        <h1 className={styles.title}>A cada 7 dias</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -91,7 +96,7 @@ export default function Page() {
             +
           </button>
 
-          {/* Botão Home atualizado */}
+          {/* Botão Home */}
           <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
@@ -102,6 +107,7 @@ export default function Page() {
         </div>
       </header>
 
+      {/* Lista de cuidados */}
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados.map((item, idx) => (
@@ -138,6 +144,7 @@ export default function Page() {
           ))}
         </ul>
 
+        {/* Campo para adicionar novo cuidado */}
         {adicionando && (
           <div className={styles.addSection}>
             <input
@@ -162,6 +169,7 @@ export default function Page() {
         )}
       </section>
 
+      {/* Botão salvar */}
       <Link href="/unhas" className={styles.salvarBtn}>
         Salvar
       </Link>

@@ -1,7 +1,16 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./calendario.module.css";
 
 export default function Personalize() {
+  const [nomeUsuario, setNomeUsuario] = useState("");
+
+  useEffect(() => {
+    // Pega o nome do usuário do LocalStorage
+    const nome = localStorage.getItem("usuarioNome");
+    if (nome) setNomeUsuario(nome);
+  }, []);
+
   return (
     <div className={styles.container}>
       {/* TOPO DA TELA */}
@@ -12,7 +21,7 @@ export default function Personalize() {
             alt="Ícone Usuário"
             className={styles.userIcon}
           />
-          <span className={styles.userName}>Anne Karine</span>
+          <span className={styles.userName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
         <div className={styles.headerIcons}>

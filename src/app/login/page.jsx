@@ -3,30 +3,29 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
 
-
   const router = useRouter();
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (!email || !senha) {
       setErro("Preencha todos os campos!");
       return;
     }
 
+    // Pega o nome do usuário previamente salvo no cadastro
+    // Se não tiver, salva "Usuário"
+    const nomeSalvo = localStorage.getItem("usuarioNome") || "Usuário";
+    localStorage.setItem("usuarioNome", nomeSalvo);
 
     setErro("");
     router.push("/calendario");
   };
-
 
   return (
     <div className={styles.container}>
@@ -42,7 +41,6 @@ export default function Login() {
             Organize sua rotina, realce sua essência!
           </p>
         </div>
-
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <input
@@ -60,15 +58,12 @@ export default function Login() {
             className={styles.input}
           />
 
-
           {erro && <p className={styles.error}>{erro}</p>}
-
 
           <button type="submit" className={styles.button}>
             Entrar
           </button>
         </form>
-
 
         <p className={styles.forgot}>
           <a href="/senha">Esqueceu a senha?</a>

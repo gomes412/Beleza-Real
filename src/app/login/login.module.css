@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f9dbe7;
+  background-color: #EAC5C5;
   font-family: "Arial", sans-serif;
 }
 
@@ -14,17 +14,17 @@
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   width: 350px;
+  max-width: 90%;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-
+/* Cabeçalho */
 .header {
   margin-bottom: 2rem;
 }
-
 
 .flower {
   width: 55px;
@@ -32,14 +32,12 @@
   margin-bottom: 0.5rem;
 }
 
-
 .title {
   font-size: 2rem;
   font-weight: bold;
   margin: 0;
   color: #333;
 }
-
 
 .subtitle {
   font-size: 1rem;
@@ -53,7 +51,6 @@
   flex-direction: column;
   width: 100%;
   gap: 1rem;
-  align-items: center;
 }
 
 
@@ -63,8 +60,8 @@
   border-radius: 8px;
   font-size: 1rem;
   width: 100%;
+  box-sizing: border-box;
 }
-
 
 .input:focus {
   outline: none;
@@ -74,18 +71,18 @@
 
 
 .button {
-  display: inline-block;
   padding: 0.9rem;
   background-color: #d17fa0;
   color: white;
   font-weight: bold;
+  border: none;
   border-radius: 8px;
-  text-decoration: none;
+  width: 100%; 
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
   text-align: center;
-  width: 100%;
-  margin-top: 0.5rem;
 }
-
 
 .button:hover {
   background-color: #b65f83;
@@ -93,12 +90,11 @@
 
 
 .forgot {
-  margin-top: 1.7rem;
+  margin-top: 1.5rem;
   font-size: 0.9rem;
   color: #d17fa0;
   text-decoration: none;
 }
-
 
 .forgot:hover {
   text-decoration: underline;
