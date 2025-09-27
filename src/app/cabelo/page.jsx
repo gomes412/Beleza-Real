@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 export default function Escolher() {
   return (
     <div className={styles.container}>
-   
+    
       <header className={styles.header}>
         <div className={styles.logo}>
           <img
@@ -33,14 +33,15 @@ export default function Escolher() {
         </div>
       </header>
 
+    
       <main className={styles.main}>
-        <a href="/todoDia1" className={styles.optionButton}>Todos os Dias</a>
-        <a href="/cada7.1" className={styles.optionButton}>A cada 7 dias</a>
-        <a href="/cada15.1" className={styles.optionButton}>A cada 15 dias</a>
-        <a href="/cada30.1" className={styles.optionButton}>A cada 30 dias</a>
-        <a href="/personalizar1" className={styles.optionButton}>Personalize a data</a>
+        <a href="/todoDia2" className={styles.optionButton}>Todos os Dias</a>
+        <a href="/cada7.2" className={styles.optionButton}>A cada 7 dias</a>
+        <a href="/cada15.2" className={styles.optionButton}>A cada 15 dias</a>
+        <a href="/cada30.2" className={styles.optionButton}>A cada 30 dias</a>
+        <a href="/personalizar2" className={styles.optionButton}>Personalize a data</a>
 
-        <a href="/calendario" className={styles.saveButton}>Voltar</a>
+        <a href="/calendario" className={styles.saveButton}>Salvar</a>
       </main>
     </div>
   );

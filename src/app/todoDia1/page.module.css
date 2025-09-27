@@ -1,15 +1,15 @@
 .container {
-  background: #d3b4b4;
+  background: #ffffff;
   min-height: 100vh;
   border-radius: 14px;
   padding: 24px;
-  max-width: 520px;
+  max-width: 1300px;
   margin: 20px auto;
   box-sizing: border-box;
 }
 
 
-/* header */
+
 .header {
   display: flex;
   align-items: center;
@@ -18,13 +18,15 @@
 }
 
 
-/* perfil com logo bonequinha + nome */
+
 .profile {
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: default;
 }
+
+
 
 
 .logo {
@@ -35,14 +37,16 @@
 }
 
 
+
+
 .profileName {
-  font-family: serif;
-  font-size: 1.05rem;
+  font-family: "Kotta One", serif;
+  font-weight: 400;
+  font-size: 1.313rem;
   color: #222;
 }
 
 
-/* título central */
 .title {
   font-size: 2rem;
   font-family: serif;
@@ -52,12 +56,13 @@
 }
 
 
-/* right header (add + home) */
 .rightHeader {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
+
 
 
 .addBtn {
@@ -75,13 +80,15 @@
 }
 
 
-/* link da home (aplica mesmo estilo do botão) */
 .homeLink img {
-  width: 38px;   /* ajuste o tamanho que quiser */
+  width: 38px;  
   height: 38px;
-  border-radius: 50%; /* deixa arredondado */
+  border-radius: 50%; 
   object-fit: cover;
 }
+
+
+
 
 
 
@@ -90,10 +97,11 @@
 }
 
 
-/* lista */
 .listSection {
   margin-top: 24px;
 }
+
+
 
 
 .cuidadosList {
@@ -101,6 +109,8 @@
   padding: 0;
   margin: 0;
 }
+
+
 
 
 .cuidadoItem {
@@ -115,17 +125,19 @@
 }
 
 
+
+
 .cuidadoText {
   flex: 1;
 }
 
-
-/* ações do item */
 .itemActions {
   display: flex;
   gap: 8px;
   align-items: center;
 }
+
+
 
 
 .duvidaBtn {
@@ -140,7 +152,6 @@
 }
 
 
-/* excluir */
 .excluirBtn {
   padding: 6px 10px;
   border-radius: 6px;
@@ -153,6 +164,8 @@
 }
 
 
+
+
 /* adicionar */
 .addSection {
   margin-top: 14px;
@@ -160,6 +173,8 @@
   gap: 8px;
   align-items: center;
 }
+
+
 
 
 .input {
@@ -173,6 +188,8 @@
 }
 
 
+
+
 .confirmAddBtn {
   padding: 8px 14px;
   border-radius: 6px;
@@ -184,6 +201,8 @@
 }
 
 
+
+
 .cancelAddBtn {
   padding: 8px 10px;
   border-radius: 6px;
@@ -193,8 +212,6 @@
   cursor: pointer;
 }
 
-
-/* salvar (link estilizado) */
 .salvarBtn {
   display: inline-block;
   margin-top: 24px;

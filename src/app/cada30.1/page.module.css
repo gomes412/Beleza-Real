@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
-
 .container {
-  background: #ffffff;
+  background: #d3b4b4;
   min-height: 100vh;
   border-radius: 14px;
   padding: 24px;
-  max-width: 1300px;
+  max-width: 520px;
   margin: 20px auto;
   box-sizing: border-box;
 }
@@ -30,8 +28,8 @@
 
 
 .logo {
-  width: 47px;
-  height: 47x;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -40,19 +38,20 @@
 
 
 .profileName {
-  font-family: "Kotta One", serif;
-  font-weight: 400;
-  font-size: 1.313rem;
+  font-family: serif;
+  font-size: 1.05rem;
   color: #222;
 }
 
+
 .title {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-family: serif;
   margin: 0;
   text-align: center;
   flex: 1;
 }
+
 
 .rightHeader {
   display: flex;
@@ -79,13 +78,17 @@
 
 
 
-
 .homeLink img {
-  width: 38px;  
+  width: 38px;   
   height: 38px;
-  border-radius: 50%;
+  border-radius: 50%; 
   object-fit: cover;
 }
+
+
+
+
+
 
 .homeIcon {
   font-size: 1.2rem;
@@ -96,11 +99,17 @@
   margin-top: 24px;
 }
 
+
+
+
 .cuidadosList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
+
+
 
 .cuidadoItem {
   display: flex;
@@ -109,9 +118,12 @@
   border-bottom: 1px solid #c7a6a6;
   padding: 10px 0;
   font-family: serif;
-  font-size: 1.40rem;
+  font-size: 1.12rem;
   cursor: pointer;
 }
+
+
+
 
 .cuidadoText {
   flex: 1;
@@ -124,6 +136,9 @@
   align-items: center;
 }
 
+
+
+
 .duvidaBtn {
   background: #ebeaea;
   border-radius: 50%;
@@ -134,6 +149,7 @@
   cursor: pointer;
   box-shadow: 0.5px 0.5px 2px #aaa;
 }
+
 
 .excluirBtn {
   padding: 6px 10px;
@@ -146,12 +162,15 @@
   box-shadow: 1px 2px 4px #bca2a2;
 }
 
+
 .addSection {
   margin-top: 14px;
   display: flex;
   gap: 8px;
   align-items: center;
 }
+
+
 
 
 .input {
@@ -174,6 +193,7 @@
   box-shadow: 1px 2px 4px #bca2a2;
 }
 
+
 .cancelAddBtn {
   padding: 8px 10px;
   border-radius: 6px;
@@ -182,6 +202,8 @@
   border: 1px solid #cbb;
   cursor: pointer;
 }
+
+
 
 .salvarBtn {
   display: inline-block;

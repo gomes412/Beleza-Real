@@ -6,14 +6,14 @@ export default function Personalize() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    // Pega o nome do usuário do LocalStorage
+   
     const nome = localStorage.getItem("usuarioNome");
     if (nome) setNomeUsuario(nome);
   }, []);
 
   return (
     <div className={styles.container}>
-      {/* TOPO DA TELA */}
+    
       <header className={styles.header}>
         <div className={styles.userInfo}>
           <img
@@ -36,12 +36,12 @@ export default function Personalize() {
         </div>
       </header>
 
-      {/* TÍTULO */}
+     
       <h2 className={styles.title}>Personalize seu Cronograma</h2>
 
-      {/* GRADE DE BOTÕES */}
+    
       <div className={styles.grid}>
-        {/* Lado esquerdo - Unhas, Cabelo, Corpo, Rosto */}
+       
         <div className={styles.leftColumn}>
           <a href="/unhas" className={styles.card}>
             <img src="https://i.pinimg.com/736x/e5/45/06/e545066514246f2c204d9b3ecf304af8.jpg" alt="Unhas" />
@@ -64,7 +64,7 @@ export default function Personalize() {
           </a>
         </div>
 
-        {/* Lado direito - Saúde, Ciclo, Cílios */}
+  
         <div className={styles.rightColumn}>
           <a href="/saude" className={styles.card}>
             <img src="https://i.pinimg.com/236x/c8/2d/78/c82d782a1c9225e1cb739f0762d6f288.jpg" alt="Saúde" />
@@ -83,7 +83,7 @@ export default function Personalize() {
         </div>
       </div>
 
-      {/* BOTÃO SALVAR */}
+   
       <a href="/diaria" className={styles.saveButton}>
         Salvar Cronogramas
       </a>

@@ -7,13 +7,15 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 
+// Lista inicial de cuidados (a cada 15 dias)
 const cuidadosDefault = [
-  "Lavar Bem as Mãos e Pés",
-  "Hidratante Para Mãos e Pés",
+  "Fazer manicure e pedicure completos",
+  "Esfoliar pés e mãos",
+  "Aplicar óleo de amêndoas",
 ];
 
 
-export default function PageTodosDias() {
+export default function Page15() {
   const router = useRouter();
 
 
@@ -27,10 +29,8 @@ export default function PageTodosDias() {
 
   // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidadosDiarios");
-    if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
-    }
+    const armazenados = localStorage.getItem("cuidados15dias");
+    if (armazenados) setCuidados(JSON.parse(armazenados));
 
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
@@ -40,7 +40,7 @@ export default function PageTodosDias() {
 
   // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados15dias", JSON.stringify(cuidados));
   }, [cuidados]);
 
 
@@ -92,7 +92,7 @@ export default function PageTodosDias() {
         </div>
 
 
-        <h1 className={styles.title}>Todos os Dias</h1>
+        <h1 className={styles.title}>A cada 15 dias</h1>
 
 
         <div className={styles.rightHeader}>
@@ -184,3 +184,5 @@ export default function PageTodosDias() {
     </div>
   );
 }
+
+

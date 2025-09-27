@@ -1,21 +1,19 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
 const cuidadosDefault = [
-  "Lavar Bem as Mãos e Pés",
-  "Hidratante Para Mãos e Pés",
+  "Esfoliação",
+  "Depilação",
+  "Hidratante com óleo",
+  "Massagem corporal",
 ];
 
-
-export default function PageTodosDias() {
+export default function Page() {
   const router = useRouter();
-
 
   const [nome, setNome] = useState("");
   const [mensagem, setMensagem] = useState("");
@@ -24,25 +22,19 @@ export default function PageTodosDias() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-
-  // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidadosDiarios");
+    const armazenados = localStorage.getItem("cuidados7dias3");
     if (armazenados) {
       setCuidados(JSON.parse(armazenados));
     }
-
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-
-  // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados7dias3", JSON.stringify(cuidados));
   }, [cuidados]);
-
 
   const handleAdicionar = (e) => {
     e.preventDefault();
@@ -54,26 +46,20 @@ export default function PageTodosDias() {
     setMensagem("Cuidado adicionado com sucesso!");
   };
 
-
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((p) => p.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
-
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-
-  // Redireciona para página de dúvida específica
-  const irDuvida = (cuidado, e) => {
+  const irDuvida = (item, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
+    router.push(`/duvida-${item.toLowerCase().replace(/\s+/g, "-")}`);
   };
-
 
   return (
     <div className={styles.container}>
@@ -91,9 +77,7 @@ export default function PageTodosDias() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-
-        <h1 className={styles.title}>Todos os Dias</h1>
-
+        <h1 className={styles.title}>A cada 7 dias</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -105,7 +89,6 @@ export default function PageTodosDias() {
             +
           </button>
 
-
           <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
@@ -115,7 +98,6 @@ export default function PageTodosDias() {
           </Link>
         </div>
       </header>
-
 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
@@ -127,7 +109,6 @@ export default function PageTodosDias() {
             >
               <span className={styles.cuidadoText}>{item}</span>
 
-
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
@@ -136,7 +117,6 @@ export default function PageTodosDias() {
                 >
                   ?
                 </button>
-
 
                 {selecionado === idx && (
                   <button
@@ -151,7 +131,6 @@ export default function PageTodosDias() {
             </li>
           ))}
         </ul>
-
 
         {adicionando && (
           <div className={styles.addSection}>
@@ -177,8 +156,7 @@ export default function PageTodosDias() {
         )}
       </section>
 
-
-      <Link href="/unhas" className={styles.salvarBtn}>
+      <Link href="/corpo" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>

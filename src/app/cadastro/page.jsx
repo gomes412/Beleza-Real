@@ -19,13 +19,11 @@ export default function Cadastro() {
       return;
     }
 
-    // Salva o nome no LocalStorage para uso nas outras telas
     localStorage.setItem("usuarioNome", nome);
 
     setErro("");
     alert(`Conta criada com sucesso!\nBem-vinda, ${nome}!`);
 
-    // Redireciona para a tela de calendário
     router.push("/calendario");
   };
 

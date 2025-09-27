@@ -8,7 +8,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* TOPO */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -54,7 +54,7 @@
   object-fit: cover;
 }
 
-/* TÍTULO */
+
 .title {
   font-size: 2rem;
   color: #4a2e2e;
@@ -63,11 +63,11 @@
   text-align: center;
 }
 
-/* GRID DE BOTÕES */
+
 .grid {
   display: flex;
-  gap: 50px; /* Diminuí o espaço entre as colunas */
-  flex-wrap: wrap; /* Permite que os itens se ajustem responsivamente */
+  gap: 50px; 
+  flex-wrap: wrap; 
   justify-content: center;
   margin-bottom: 20px;
 }
@@ -97,7 +97,7 @@
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar o mouse */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .card img {
@@ -113,7 +113,7 @@
   text-align: center;
 }
 
-/* BOTÃO SALVAR */
+
 .saveButton {
   background: #d9a5b3;
   color: white;
@@ -125,14 +125,14 @@
   cursor: pointer;
   transition: background 0.2s ease;
   display: inline-block;
-  margin-top: 30px; /* Distância do botão de salvar */
+  margin-top: 30px; 
 }
 
 .saveButton:hover {
   background: #c58a9d;
 }
 
-/* Responsividade para telas menores */
+
 @media (max-width: 768px) {
   .grid {
     flex-direction: column;
@@ -146,10 +146,10 @@
   }
 
   .card {
-    width: 150px; /* Tamanho maior dos cards em telas menores */
+    width: 150px;
   }
 
   .saveButton {
-    padding: 15px 60px; /* Ajuste de tamanho do botão em telas menores */
+    padding: 15px 60px;
   }
 }

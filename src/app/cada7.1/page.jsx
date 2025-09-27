@@ -1,9 +1,11 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+
 
 // Lista inicial de cuidados (a cada 7 dias)
 const cuidadosDefault = [
@@ -14,8 +16,10 @@ const cuidadosDefault = [
   "Usar base fortalecedora",
 ];
 
-export default function Page() {
+
+export default function Page7() {
   const router = useRouter();
+
 
   const [nome, setNome] = useState("");
   const [mensagem, setMensagem] = useState("");
@@ -24,6 +28,7 @@ export default function Page() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
+
   // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados7dias");
@@ -31,15 +36,17 @@ export default function Page() {
       setCuidados(JSON.parse(armazenados));
     }
 
-    // Pega o nome do usuário do LocalStorage
+
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
+
 
   // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
     localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
   }, [cuidados]);
+
 
   const handleAdicionar = (e) => {
     e.preventDefault();
@@ -51,25 +58,30 @@ export default function Page() {
     setMensagem("Cuidado adicionado com sucesso!");
   };
 
+
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((p) => p.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
+
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  const irDuvida = (e) => {
+
+  // Redireciona para página de dúvida específica
+  const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    router.push("/duvida");
+    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
+    router.push(caminho);
   };
+
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        {/* Perfil */}
         <div className={styles.profile}>
           <img
             src="/bonequinha.png"
@@ -83,8 +95,9 @@ export default function Page() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        {/* Título */}
+
         <h1 className={styles.title}>A cada 7 dias</h1>
+
 
         <div className={styles.rightHeader}>
           <button
@@ -96,7 +109,7 @@ export default function Page() {
             +
           </button>
 
-          {/* Botão Home */}
+
           <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
@@ -107,7 +120,7 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Lista de cuidados */}
+
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados.map((item, idx) => (
@@ -118,17 +131,16 @@ export default function Page() {
             >
               <span className={styles.cuidadoText}>{item}</span>
 
+
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    irDuvida(e);
-                  }}
+                  onClick={(e) => irDuvida(item, e)}
                   aria-label={`Dúvida sobre ${item}`}
                 >
                   ?
                 </button>
+
 
                 {selecionado === idx && (
                   <button
@@ -144,7 +156,7 @@ export default function Page() {
           ))}
         </ul>
 
-        {/* Campo para adicionar novo cuidado */}
+
         {adicionando && (
           <div className={styles.addSection}>
             <input
@@ -169,10 +181,11 @@ export default function Page() {
         )}
       </section>
 
-      {/* Botão salvar */}
+
       <Link href="/unhas" className={styles.salvarBtn}>
-        Salvar
+       Voltar
       </Link>
     </div>
   );
 }
+ 

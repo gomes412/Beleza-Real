@@ -6,14 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
 const cuidadosDefault = [
-  "Lavar Bem as Mãos e Pés",
-  "Hidratante Para Mãos e Pés",
+  "Tratamento nutritivo",
+  "Hidratação profunda dos pés",
+  "Polimento para brilho natural",
 ];
 
 
-export default function PageTodosDias() {
+export default function Page30() {
   const router = useRouter();
 
 
@@ -24,10 +24,8 @@ export default function PageTodosDias() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-
-  // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidadosDiarios");
+    const armazenados = localStorage.getItem("cuidados30dias");
     if (armazenados) {
       setCuidados(JSON.parse(armazenados));
     }
@@ -37,10 +35,8 @@ export default function PageTodosDias() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-
-  // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados30dias", JSON.stringify(cuidados));
   }, [cuidados]);
 
 
@@ -66,8 +62,6 @@ export default function PageTodosDias() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-
-  // Redireciona para página de dúvida específica
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
     const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
@@ -92,7 +86,7 @@ export default function PageTodosDias() {
         </div>
 
 
-        <h1 className={styles.title}>Todos os Dias</h1>
+        <h1 className={styles.title}>A cada 30 dias</h1>
 
 
         <div className={styles.rightHeader}>
