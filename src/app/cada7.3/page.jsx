@@ -12,6 +12,11 @@ const cuidadosDefault = [
   "Massagem corporal",
 ];
 
+
+const diasSemana = [
+  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
+];
+
 export default function Page() {
   const router = useRouter();
 
@@ -21,6 +26,7 @@ export default function Page() {
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
+  const [diaSelecionado, setDiaSelecionado] = useState("");  
 
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados7dias3");
@@ -30,11 +36,17 @@ export default function Page() {
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
+
+    const diaSalvo = localStorage.getItem("diaSelecionado");
+    if (diaSalvo) setDiaSelecionado(diaSalvo); 
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cuidados7dias3", JSON.stringify(cuidados));
-  }, [cuidados]);
+    if (diaSelecionado) {
+      localStorage.setItem("diaSelecionado", diaSelecionado);  
+    }
+  }, [cuidados, diaSelecionado]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
@@ -54,6 +66,11 @@ export default function Page() {
 
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
+  };
+
+  
+  const selecionarDia = (dia) => {
+    setDiaSelecionado(dia); 
   };
 
   const irDuvida = (item, e) => {
@@ -154,6 +171,24 @@ export default function Page() {
             </button>
           </div>
         )}
+      </section>
+
+      <section className={styles.diaSemanaSection}>
+        <div className={styles.diaSemanaText}>
+          Selecione qual será o dia da semana em que esse cuidado ocorrerá:
+        </div>
+
+        <div className={styles.diaSemanaButtons}>
+          {diasSemana.map((dia, index) => (
+            <button
+              key={index}
+              className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
+              onClick={() => selecionarDia(dia)}
+            >
+              {dia}
+            </button>
+          ))}
+        </div>
       </section>
 
       <Link href="/corpo" className={styles.salvarBtn}>

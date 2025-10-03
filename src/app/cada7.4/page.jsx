@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 const cuidadosDefault = [
-  "Lavar",
-  "Tônico",
-  "Hidratante",
-  // removemos "Protetor solar" daqui
+  "Esfoliação suave",
+  "Máscara facial de argila",
+  "Máscara hidratante",
+  "Massagem facial",
 ];
 
-export default function TodoDia4() {
+const diasSemana = [
+  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", 
+  "Quinta-feira", "Sexta-feira", "Sábado"
+];
+
+export default function Page7Face() {
   const router = useRouter();
 
   const [nome, setNome] = useState("");
@@ -21,20 +26,27 @@ export default function TodoDia4() {
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
+  const [diaSelecionado, setDiaSelecionado] = useState(""); 
 
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidadosTodoDia4");
+    const armazenados = localStorage.getItem("cuidados7diasFace");
     if (armazenados) {
       setCuidados(JSON.parse(armazenados));
     }
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
+
+    const diaSalvo = localStorage.getItem("diaSelecionadoFace");
+    if (diaSalvo) setDiaSelecionado(diaSalvo); 
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cuidadosTodoDia4", JSON.stringify(cuidados));
-  }, [cuidados]);
+    localStorage.setItem("cuidados7diasFace", JSON.stringify(cuidados));
+    if (diaSelecionado) {
+      localStorage.setItem("diaSelecionadoFace", diaSelecionado); 
+    }
+  }, [cuidados, diaSelecionado]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
@@ -56,9 +68,14 @@ export default function TodoDia4() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  const irDuvida = (e) => {
+  const selecionarDia = (dia) => {
+    setDiaSelecionado(dia); 
+  };
+
+  const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    router.push("/duvidaTodoDia4");
+    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
+    router.push(caminho);
   };
 
   return (
@@ -77,7 +94,7 @@ export default function TodoDia4() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>Todos os Dias</h1>
+        <h1 className={styles.title}>A cada 7 dias</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -88,6 +105,7 @@ export default function TodoDia4() {
           >
             +
           </button>
+
           <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
@@ -100,7 +118,6 @@ export default function TodoDia4() {
 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
-          {/* Cuidados normais */}
           {cuidados.map((item, idx) => (
             <li
               key={idx}
@@ -112,10 +129,7 @@ export default function TodoDia4() {
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    irDuvida(e);
-                  }}
+                  onClick={(e) => irDuvida(item, e)}
                   aria-label={`Dúvida sobre ${item}`}
                 >
                   ?
@@ -133,24 +147,6 @@ export default function TodoDia4() {
               </div>
             </li>
           ))}
-
-          {/* Protetor solar fixo no fim, agora com botão de dúvida */}
-          <li className={styles.cuidadoItem}>
-            <span className={styles.cuidadoText}>Protetor solar</span>
-
-            <div className={styles.itemActions}>
-              <button
-                className={styles.duvidaBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  irDuvida(e);
-                }}
-                aria-label="Dúvida sobre Protetor solar"
-              >
-                ?
-              </button>
-            </div>
-          </li>
         </ul>
 
         {adicionando && (
@@ -175,6 +171,24 @@ export default function TodoDia4() {
             </button>
           </div>
         )}
+      </section>
+
+      <section className={styles.diaSemanaSection}>
+        <div className={styles.diaSemanaText}>
+          Selecione qual será o dia da semana em que esse cuidado ocorrerá:
+        </div>
+
+        <div className={styles.diaSemanaButtons}>
+          {diasSemana.map((dia, index) => (
+            <button
+              key={index}
+              className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
+              onClick={() => selecionarDia(dia)}
+            >
+              {dia}
+            </button>
+          ))}
+        </div>
       </section>
 
       <Link href="/rosto" className={styles.salvarBtn}>

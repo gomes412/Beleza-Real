@@ -10,12 +10,16 @@
   box-sizing: border-box;
 }
 
+
+/* header */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
+
+
 
 .profile {
   display: flex;
@@ -24,12 +28,14 @@
   cursor: default;
 }
 
+
 .logo {
   width: 47px;
   height: 47px;
   border-radius: 50%;
   object-fit: cover;
 }
+
 
 .profileName {
   font-family: "Kotta One", serif;
@@ -38,6 +44,8 @@
   color: #222;
 }
 
+
+/* título central */
 .title {
   font-size: 2rem;
   font-family: serif;
@@ -46,11 +54,14 @@
   flex: 1;
 }
 
+
+/* right header (add + home) */
 .rightHeader {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
 
 .addBtn {
   background: #fff;
@@ -66,26 +77,31 @@
   justify-content: center;
 }
 
+
 .homeLink img {
-  width: 38px;   
+  width: 38px;
   height: 38px;
-  border-radius: 50%; 
+  border-radius: 50%;
   object-fit: cover;
 }
+
 
 .homeIcon {
   font-size: 1.2rem;
 }
 
+
 .listSection {
   margin-top: 24px;
 }
+
 
 .cuidadosList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 
 .cuidadoItem {
   display: flex;
@@ -98,6 +114,7 @@
   cursor: pointer;
 }
 
+
 .cuidadoText {
   flex: 1;
 }
@@ -107,6 +124,7 @@
   gap: 8px;
   align-items: center;
 }
+
 
 .duvidaBtn {
   background: #ebeaea;
@@ -137,6 +155,7 @@
   align-items: center;
 }
 
+
 .input {
   font-size: 1rem;
   padding: 8px;
@@ -147,6 +166,7 @@
   flex: 1;
 }
 
+
 .confirmAddBtn {
   padding: 8px 14px;
   border-radius: 6px;
@@ -156,6 +176,7 @@
   cursor: pointer;
   box-shadow: 1px 2px 4px #bca2a2;
 }
+
 
 .cancelAddBtn {
   padding: 8px 10px;
@@ -179,47 +200,4 @@
   text-decoration: none;
   color: inherit;
   margin-left: auto;
-}
-
-
-.diaSemanaSection {
-  margin-top: 30px;
-}
-
-.diaSemanaText {
-  font-family: "Kotta One", serif;
-  font-size: 1.2rem;
-  color: #222;
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.diaSemanaButtons {
-  display: flex;
-  gap: 30px; 
-  justify-content: center;
-}
-
-.diaBtn {
-  background: #f0f0f0;
-  border: 1px solid #cbb;
-  border-radius: 6px;
-  padding: 8px 16px; 
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.3s;
-  color: #222;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-}
-
-.diaBtn:hover {
-  background: #f8c0c0;
-  transform: scale(1.05);
-}
-
-
-.diaSelecionado {
-  background: #c7a6a6; 
-  border-color: #a18b8b; 
-  color: #fff; 
 }
