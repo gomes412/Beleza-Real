@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
+
 .container {
-  background: #d3b4b4;
+  background: #ffffff;
   min-height: 100vh;
   border-radius: 14px;
   padding: 24px;
-  max-width: 520px;
+  max-width: 1300px;
   margin: 20px auto;
   box-sizing: border-box;
 }
@@ -28,8 +30,8 @@
 
 
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 47px;
+  height: 47px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -38,8 +40,9 @@
 
 
 .profileName {
-  font-family: serif;
-  font-size: 1.05rem;
+ font-family: "Kotta One", serif;
+  font-weight: 400;
+  font-size: 1.313rem;
   color: #222;
 }
 
@@ -86,10 +89,6 @@
 }
 
 
-
-
-
-
 .homeIcon {
   font-size: 1.2rem;
 }
@@ -100,15 +99,11 @@
 }
 
 
-
-
 .cuidadosList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
-
 
 
 .cuidadoItem {
@@ -118,11 +113,9 @@
   border-bottom: 1px solid #c7a6a6;
   padding: 10px 0;
   font-family: serif;
-  font-size: 1.12rem;
+  font-size: 1.40rem;
   cursor: pointer;
 }
-
-
 
 
 .cuidadoText {

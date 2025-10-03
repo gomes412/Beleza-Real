@@ -5,27 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Lista inicial de cuidados (a cada 7 dias)
 const cuidadosDefault = [
-  "Cortar",
-  "Lixar",
-  "Empurrar cutículas",
-  "Hidratar cutículas",
-  "Usar base fortalecedora",
+  "Lavar",
+  "Tônico",
+  "Hidratante",
+  // removemos "Protetor solar" daqui
 ];
 
-// Dias da semana para selecionar
-const diasDaSemana = [
-  "Domingo", 
-  "Segunda-feira", 
-  "Terça-feira", 
-  "Quarta-feira", 
-  "Quinta-feira", 
-  "Sexta-feira", 
-  "Sábado"
-];
-
-export default function Page7() {
+export default function TodoDia4() {
   const router = useRouter();
 
   const [nome, setNome] = useState("");
@@ -34,11 +21,9 @@ export default function Page7() {
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
-  const [diaSelecionado, setDiaSelecionado] = useState(null); // Estado para o dia da semana selecionado
 
-  // Carregar lista do localStorage quando a tela abre
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados7dias");
+    const armazenados = localStorage.getItem("cuidadosTodoDia4");
     if (armazenados) {
       setCuidados(JSON.parse(armazenados));
     }
@@ -47,9 +32,8 @@ export default function Page7() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar lista no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
+    localStorage.setItem("cuidadosTodoDia4", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
@@ -72,16 +56,9 @@ export default function Page7() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // Redireciona para página de dúvida específica
-  const irDuvida = (cuidado, e) => {
+  const irDuvida = (e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
-  };
-
-  // Função para atualizar o dia selecionado
-  const handleDiaSelecionado = (dia) => {
-    setDiaSelecionado(dia);
+    router.push("/duvidaTodoDia4");
   };
 
   return (
@@ -100,7 +77,7 @@ export default function Page7() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>A cada 7 dias</h1>
+        <h1 className={styles.title}>Todos os Dias</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -111,7 +88,6 @@ export default function Page7() {
           >
             +
           </button>
-
           <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
@@ -124,6 +100,7 @@ export default function Page7() {
 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
+          {/* Cuidados normais */}
           {cuidados.map((item, idx) => (
             <li
               key={idx}
@@ -135,7 +112,10 @@ export default function Page7() {
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => irDuvida(item, e)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    irDuvida(e);
+                  }}
                   aria-label={`Dúvida sobre ${item}`}
                 >
                   ?
@@ -153,6 +133,11 @@ export default function Page7() {
               </div>
             </li>
           ))}
+
+          {/* Protetor solar fixo no fim */}
+          <li className={styles.cuidadoItem}>
+            <span className={styles.cuidadoText}>Protetor solar</span>
+          </li>
         </ul>
 
         {adicionando && (
@@ -177,25 +162,9 @@ export default function Page7() {
             </button>
           </div>
         )}
-
-        {/* Seção de seleção de dia da semana */}
-        <div className={styles.diaSemanaSection}>
-          <p className={styles.diaSemanaText}>Selecione qual será o dia da semana em que esse cuidado ocorrerá:</p>
-          <div className={styles.diaSemanaButtons}>
-            {diasDaSemana.map((dia) => (
-              <button
-                key={dia}
-                className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
-                onClick={() => handleDiaSelecionado(dia)}
-              >
-                {dia}
-              </button>
-            ))}
-          </div>
-        </div>
       </section>
 
-      <Link href="/unhas" className={styles.salvarBtn}>
+      <Link href="/rosto" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>
