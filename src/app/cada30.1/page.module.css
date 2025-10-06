@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kotta+One&display=swap");
 
 .container {
   background: #ffffff;
@@ -23,47 +23,37 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: default;
 }
-
-
 
 
 .logo {
   width: 47px;
-  height: 47x;
+  height: 47px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-
-
-
 .profileName {
- font-family: "Kotta One", serif;
+  font-family: "Kotta One", serif;
   font-weight: 400;
   font-size: 1.313rem;
   color: #222;
 }
 
-
 .title {
   font-size: 2rem;
-  font-family: serif;
+  font-family: "Kotta One", serif;
   margin: 0;
   text-align: center;
   flex: 1;
+  color: #000000;
 }
-
 
 .rightHeader {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
-
-
 
 .addBtn {
   background: #fff;
@@ -77,33 +67,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease;
 }
 
-
+.addBtn:hover {
+  transform: scale(1.05);
+  background: #f9f9f9;
+}
 
 .homeLink img {
-  width: 38px;   
+  width: 38px;
   height: 38px;
-  border-radius: 50%; 
+  border-radius: 50%;
   object-fit: cover;
 }
-
-
-
-
-
 
 .homeIcon {
   font-size: 1.2rem;
 }
 
-
 .listSection {
   margin-top: 24px;
 }
-
-
-
 
 .cuidadosList {
   list-style: none;
@@ -111,36 +96,39 @@
   margin: 0;
 }
 
-
-
-
 .cuidadoItem {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   border-bottom: 1px solid #c7a6a6;
-  padding: 10px 0;
+  padding: 12px 0;
   font-family: serif;
-  font-size: 1.40rem;
+  font-size: 1.35rem;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-
-
+.cuidadoItem:hover {
+  background: #fff7f7;
+}
 
 .cuidadoText {
   flex: 1;
+  font-weight: 500;
+  color: #222;
 }
 
+.cuidadoInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
 .itemActions {
   display: flex;
   gap: 8px;
   align-items: center;
 }
-
-
-
 
 .duvidaBtn {
   background: #ebeaea;
@@ -151,8 +139,12 @@
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0.5px 0.5px 2px #aaa;
+  transition: background 0.2s ease;
 }
 
+.duvidaBtn:hover {
+  background: #e0dcdc;
+}
 
 .excluirBtn {
   padding: 6px 10px;
@@ -163,18 +155,83 @@
   cursor: pointer;
   font-size: 0.9rem;
   box-shadow: 1px 2px 4px #bca2a2;
+  transition: background 0.2s ease;
 }
 
+.excluirBtn:hover {
+  background: #a33d3d;
+}
+
+.dateSection {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dateLabel {
+  font-family: "Kotta One", serif;
+  font-size: 1rem;
+  color: #b18b8b;
+}
+
+.dateInput {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbb;
+  background: #fff;
+  font-family: serif;
+  font-size: 0.95rem;
+}
+
+.confirmDateBtn {
+  background: #b18b8b;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: "Kotta One", serif;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px #bbb;
+  transition: background 0.2s ease;
+}
+
+.confirmDateBtn:hover {
+  background: #a17979;
+}
+
+.datasList {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 6px;
+  font-family: "Kotta One", serif;
+}
+
+.datasList ul {
+  list-style: disc;
+  margin-left: 20px;
+  margin-top: 4px;
+}
+
+.datasList li {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.datasTitulo {
+  font-weight: bold;
+  color: #b18b8b;
+  display: block;
+  margin-bottom: 4px;
+}
 
 .addSection {
   margin-top: 14px;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }
-
-
-
 
 .input {
   font-size: 1rem;
@@ -184,6 +241,7 @@
   background: #fff;
   outline: none;
   flex: 1;
+  min-width: 180px;
 }
 
 .confirmAddBtn {
@@ -194,8 +252,12 @@
   border: none;
   cursor: pointer;
   box-shadow: 1px 2px 4px #bca2a2;
+  transition: background 0.2s ease;
 }
 
+.confirmAddBtn:hover {
+  background: #a17979;
+}
 
 .cancelAddBtn {
   padding: 8px 10px;
@@ -204,9 +266,12 @@
   color: #b18b8b;
   border: 1px solid #cbb;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-
+.cancelAddBtn:hover {
+  background: #f8f8f8;
+}
 
 .salvarBtn {
   display: inline-block;
@@ -221,4 +286,9 @@
   text-decoration: none;
   color: inherit;
   margin-left: auto;
+  transition: background 0.2s ease;
+}
+
+.salvarBtn:hover {
+  background: #fff5f5;
 }

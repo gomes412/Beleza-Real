@@ -1,89 +1,197 @@
 "use client";
 
-
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+export default function Personalizar1() {
+  const router = useRouter();
 
-const mesesData = [
-  { nome: "Janeiro", img: "https://www.wikidates.org/br/2025/calendario-janeiro-2025-06.png" },
-  { nome: "Fevereiro", img: "https://www.wikidates.org/br/2025/calendario-fevereiro-2025-06.png" },
-  { nome: "Março", img: "https://www.wikidates.org/br/2025/calendario-marco-2025-06.png" },
-  { nome: "Abril", img: "https://www.wikidates.org/br/2025/calendario-abril-2025-06.png" },
-  { nome: "Maio", img: "https://www.wikidates.org/br/2025/calendario-maio-2025-06.png" },
-  { nome: "Junho", img: "https://www.wikidates.org/br/2025/calendario-junho-2025-06.png" },
-  { nome: "Julho", img: "https://www.wikidates.org/br/2025/calendario-julho-2025-06.png" },
-  { nome: "Agosto", img: "https://www.wikidates.org/br/2025/calendario-agosto-2025-06.png" },
-  { nome: "Setembro", img: "https://www.wikidates.org/br/2025/calendario-setembro-2025-06.png" },
-  { nome: "Outubro", img: "https://www.wikidates.org/br/2025/calendario-outubro-2025-06.png" },
-  { nome: "Novembro", img: "https://www.wikidates.org/br/2025/calendario-novembro-2025-06.png" },
-  { nome: "Dezembro", img: "https://www.wikidates.org/br/2025/calendario-dezembro-2025-06.png" },
-];
-
-
-export default function PersonalizarUnhas() {
-  const anoAtual = new Date().getFullYear();
+  const [cuidados, setCuidados] = useState([]);
+  const [nome, setNome] = useState("");
+  const [adicionando, setAdicionando] = useState(false);
+  const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const nomeSalvo = localStorage.getItem("usuarioNome");
-      if (nomeSalvo) setNomeUsuario(nomeSalvo);
-    }
+    const armazenados = localStorage.getItem("personalizar1");
+    if (armazenados) setCuidados(JSON.parse(armazenados));
+
+    const nomeSalvo = localStorage.getItem("usuarioNome");
+    if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("personalizar1", JSON.stringify(cuidados));
+  }, [cuidados]);
+
+  const handleAdicionar = (e) => {
+    e.preventDefault();
+    const v = nome.trim();
+    if (!v) return;
+    setCuidados((prev) => [
+      ...prev,
+      { nome: v, data: "", repetir: "uma-vez" },
+    ]);
+    setNome("");
+    setAdicionando(false);
+  };
+
+  const handleExcluir = (index, e) => {
+    if (e) e.stopPropagation();
+    setCuidados((prev) => prev.filter((_, i) => i !== index));
+    if (selecionado === index) setSelecionado(null);
+  };
+
+  const toggleSelecionado = (index) => {
+    setSelecionado((s) => (s === index ? null : index));
+  };
+
+  const handleDataChange = (index, value) => {
+    setCuidados((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, data: value } : item))
+    );
+  };
+
+  const handleRepetirChange = (index, value) => {
+    setCuidados((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, repetir: value } : item))
+    );
+  };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.leftHeader}>
+        <div className={styles.profile}>
           <img
             src="https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg"
-            alt="Usuária"
-            className={styles.userIcon}
+            alt="Bonequinha"
+            className={styles.logo}
           />
-          <span className={styles.userName}>{nomeUsuario || "Usuário"}</span>
+          <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-
-        <div className={styles.centerHeader}>
-          <img
-            src="https://images.vexels.com/media/users/3/215769/isolated/lists/a5881bb5f5064d8d6a4f539936496097-desenho-de-linha-de-rosa-com-folha-unica.png"
-            alt="Flor rosa"
-            className={styles.flower}
-          />
-        </div>
-
+        <h1 className={styles.title}>Personalizar Cuidados</h1>
 
         <div className={styles.rightHeader}>
-          <Link href="/home" aria-label="Home">
+          <button
+            className={styles.addBtn}
+            onClick={() => setAdicionando(true)}
+            aria-label="Adicionar cuidado"
+            title="Adicionar"
+          >
+            +
+          </button>
+
+          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
               alt="Home"
-              className={styles.iconImgRound}
+              className={styles.iconRound}
             />
           </Link>
         </div>
       </header>
 
+      <section className={styles.listSection}>
+        <ul className={styles.cuidadosList}>
+          {cuidados
+            .filter((item) => item.nome && item.nome.trim() !== "")
+            .map((item, idx) => (
+              <li
+                key={idx}
+                className={styles.cuidadoItem}
+                onClick={() => toggleSelecionado(idx)}
+              >
+                <div style={{ flex: 1 }}>
+                  <span className={styles.cuidadoText}>{item.nome}</span>
 
-      <main>
-        <h1 className={styles.title}>Personalize a data: selecione a data do seu cuidado</h1>
-        <h3 className={styles.ano}>{anoAtual}</h3>
+                  <div
+                    style={{
+                      marginTop: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
+                      Escolher data:
+                    </label>
+                    <input
+                      type="date"
+                      value={item.data || ""}
+                      onChange={(e) => handleDataChange(idx, e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #cbb",
+                        fontFamily: "serif",
+                        fontSize: "0.95rem",
+                      }}
+                    />
 
+                    <select
+                      value={item.repetir}
+                      onChange={(e) => handleRepetirChange(idx, e.target.value)}
+                      style={{
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #cbb",
+                        fontFamily: "serif",
+                        fontSize: "0.95rem",
+                      }}
+                    >
+                      <option value="uma-vez">Uma vez</option>
+                      <option value="repetir-mes">Repetir todo mês</option>
+                    </select>
+                  </div>
+                </div>
 
-        <div className={styles.meses}>
-          {mesesData.map((mes) => (
-            <Link key={mes.nome} href={`/${mes.nome.toLowerCase()}`} className={styles.mesLink}>
-              <img src={mes.img} alt={mes.nome} className={styles.mesImg} />
-            </Link>
-            
-          ))}
-        </div>
-      </main>
+                <div className={styles.itemActions}>
+                  {selecionado === idx && (
+                    <button
+                      className={styles.excluirBtn}
+                      onClick={(e) => handleExcluir(idx, e)}
+                      aria-label={`Excluir ${item.nome}`}
+                    >
+                      Excluir
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+        </ul>
+
+        {adicionando && (
+          <div className={styles.addSection}>
+            <input
+              className={styles.input}
+              placeholder="Novo cuidado"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+            <button className={styles.confirmAddBtn} onClick={handleAdicionar}>
+              Adicionar
+            </button>
+            <button
+              className={styles.cancelAddBtn}
+              onClick={() => {
+                setAdicionando(false);
+                setNome("");
+              }}
+            >
+              Cancelar
+            </button>
+          </div>
+        )}
+      </section>
+
+      <Link href="/unhas" className={styles.salvarBtn}>
+        Voltar
+      </Link>
     </div>
-    
   );
 }
