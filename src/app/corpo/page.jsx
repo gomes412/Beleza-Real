@@ -40,7 +40,7 @@ export default function Escolher() {
         <a href="/cada30.3" className={styles.optionButton}>A cada 30 dias</a>
         <a href="/personalizar3" className={styles.optionButton}>Personalize a data</a>
 
-        <a href="/calendario" className={styles.saveButton}>Salvar</a>
+        <a href="/calendario" className={styles.saveButton}>Voltar</a>
       </main>
     </div>
   );

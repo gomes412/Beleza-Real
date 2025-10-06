@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Lista inicial de cuidados (a cada 15 dias - rosto)
-const cuidadosDefault = [
+
+const cuidadosFixos = [
   "Limpeza de cravos",
   "Máscara calmante",
   "Uso de óleo facial nutritivo",
@@ -15,23 +15,38 @@ const cuidadosDefault = [
 export default function Page15Face() {
   const router = useRouter();
 
+  const [cuidados, setCuidados] = useState([]);
   const [nome, setNome] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const [cuidados, setCuidados] = useState(cuidadosDefault);
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carregar lista do localStorage quando a tela abre
+ 
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados15diasFace");
-    if (armazenados) setCuidados(JSON.parse(armazenados));
+    let cuidadosSalvos = [];
+    if (armazenados) {
+      cuidadosSalvos = JSON.parse(armazenados);
+    }
+
+
+    const cuidadosCompletos = cuidadosFixos.map((c) => {
+      const achado = cuidadosSalvos.find((item) => item.nome === c);
+      return achado ? achado : { nome: c, data: "" };
+    });
+
+   
+    const adicionais = cuidadosSalvos.filter(
+      (item) => item.nome && !cuidadosFixos.includes(item.nome)
+    );
+
+    setCuidados([...cuidadosCompletos, ...adicionais]);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar lista no localStorage sempre que mudar
+ 
   useEffect(() => {
     localStorage.setItem("cuidados15diasFace", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -40,41 +55,58 @@ export default function Page15Face() {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
-    setCuidados((p) => [...p, v]);
+    setCuidados((prev) => [...prev, { nome: v, data: "" }]);
     setNome("");
     setAdicionando(false);
-    setMensagem("Cuidado adicionado com sucesso!");
   };
 
+  
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
-    setCuidados((p) => p.filter((_, i) => i !== index));
+    setCuidados((prev) => prev.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
+ 
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // Redireciona para página de dúvida específica
+  
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
     const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
     router.push(caminho);
   };
 
+  
+  const handleDataChange = (index, value) => {
+    setCuidados((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, data: value } : item))
+    );
+  };
+
+  const gerarProximasDatas = (dataInicial) => {
+    if (!dataInicial) return [];
+    const datas = [];
+    const inicio = new Date(dataInicial);
+    for (let i = 0; i < 6; i++) {
+      const nova = new Date(inicio);
+      nova.setDate(inicio.getDate() + i * 15);
+      datas.push(nova.toLocaleDateString("pt-BR"));
+    }
+    return datas;
+  };
+
   return (
     <div className={styles.container}>
+      {/* Cabeçalho */}
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
-            src="/bonequinha.png"
+            src="https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg"
             alt="Bonequinha"
             className={styles.logo}
-            onError={(e) => {
-              e.currentTarget.src =
-                "https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg";
-            }}
           />
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
@@ -101,39 +133,100 @@ export default function Page15Face() {
         </div>
       </header>
 
+   
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
-          {cuidados.map((item, idx) => (
-            <li
-              key={idx}
-              className={styles.cuidadoItem}
-              onClick={() => toggleSelecionado(idx)}
-            >
-              <span className={styles.cuidadoText}>{item}</span>
+          {cuidados
+            .filter((item) => item.nome && item.nome.trim() !== "")
+            .map((item, idx) => (
+              <li
+                key={idx}
+                className={styles.cuidadoItem}
+                onClick={() => toggleSelecionado(idx)}
+              >
+                <div style={{ flex: 1 }}>
+                  <span className={styles.cuidadoText}>{item.nome}</span>
 
-              <div className={styles.itemActions}>
-                <button
-                  className={styles.duvidaBtn}
-                  onClick={(e) => irDuvida(item, e)}
-                  aria-label={`Dúvida sobre ${item}`}
-                >
-                  ?
-                </button>
-
-                {selecionado === idx && (
-                  <button
-                    className={styles.excluirBtn}
-                    onClick={(e) => handleExcluir(idx, e)}
-                    aria-label={`Excluir ${item}`}
+                 
+                  <div
+                    style={{
+                      marginTop: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
                   >
-                    Excluir
+                    <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
+                      Escolher data:
+                    </label>
+                    <input
+                      type="date"
+                      value={item.data || ""}
+                      onChange={(e) => handleDataChange(idx, e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #cbb",
+                        fontFamily: "serif",
+                        fontSize: "0.95rem",
+                      }}
+                    />
+                  </div>
+
+                
+                  {item.data && (
+                    <div
+                      style={{
+                        marginTop: "6px",
+                        fontFamily: "Kotta One, serif",
+                        fontSize: "0.9rem",
+                        color: "#333",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "#b18b8b",
+                          display: "block",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        Próximas datas:
+                      </span>
+                      <ul style={{ marginLeft: "18px", marginTop: "2px" }}>
+                        {gerarProximasDatas(item.data).map((data, i) => (
+                          <li key={i}>{data}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.itemActions}>
+                  <button
+                    className={styles.duvidaBtn}
+                    onClick={(e) => irDuvida(item.nome, e)}
+                    aria-label={`Dúvida sobre ${item.nome}`}
+                  >
+                    ?
                   </button>
-                )}
-              </div>
-            </li>
-          ))}
+
+                  {selecionado === idx && (
+                    <button
+                      className={styles.excluirBtn}
+                      onClick={(e) => handleExcluir(idx, e)}
+                      aria-label={`Excluir ${item.nome}`}
+                    >
+                      Excluir
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
 
+      
         {adicionando && (
           <div className={styles.addSection}>
             <input
