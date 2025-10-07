@@ -19,13 +19,26 @@ export default function Cadastro() {
     }
 
     const usuario = { nome, email, senha };
-    localStorage.setItem("usuario", JSON.stringify(usuario));
-    localStorage.setItem("usuarioNome", nome); // salva separado também
+
+    addUsuario(usuario)
 
     setErro("");
     alert(`Conta criada com sucesso!\nBem-vinda, ${nome}!`);
     router.push("/login");
   };
+
+  const addUsuario = async (usuario) => {
+    const response = await fetch('/api/usuario', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(usuario),
+    })
+    if (response.ok) {
+      fetchAlunos() 
+    }
+  }
 
   return (
     <div className={styles.container}>

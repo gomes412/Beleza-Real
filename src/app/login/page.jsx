@@ -3,36 +3,44 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+
+ 
+   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     if (!email || !senha) {
       setErro("Preencha todos os campos!");
       return;
     }
 
-    const usuarioSalvo = localStorage.getItem("usuario");
-    if (!usuarioSalvo) {
-      setErro("Nenhuma conta encontrada. Cadastre-se primeiro!");
+
+
+
+    const response = await fetch('/api/autenticar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email, senha}),
+    })
+    const usuario = response.json();
+    if (!usuario) {
+      setErro("usária não existe ou senha inválida!");
       return;
     }
-
-    const usuario = JSON.parse(usuarioSalvo);
-    if (usuario.email === email && usuario.senha === senha) {
-      setErro("");
-      localStorage.setItem("usuarioNome", usuario.nome);
-      alert(`Bem-vinda de volta, ${usuario.nome}!`);
-      router.push("/calendario");
-    } else {
-      setErro("E-mail ou senha incorretos!");
-    }
+    localStorage.setItem("usuarioNome", usuario.nome);
+    alert(`Bem-vinda de volta, ${usuario.nome}!`);
+    router.push("/calendario");
   };
+
 
   return (
     <div className={styles.container}>
@@ -48,6 +56,7 @@ export default function Login() {
             Organize sua rotina, realce sua essência!
           </p>
         </div>
+
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <input
@@ -65,12 +74,15 @@ export default function Login() {
             className={styles.input}
           />
 
+
           {erro && <p className={styles.error}>{erro}</p>}
+
 
           <button type="submit" className={styles.button}>
             Entrar
           </button>
         </form>
+
 
         <p className={styles.forgot}>
           <a href="/senha">Esqueceu a senha?</a>

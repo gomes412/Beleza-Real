@@ -1,4 +1,4 @@
-/* Container principal */
+
 .container {
   display: flex;
   justify-content: center;
@@ -11,10 +11,10 @@
 
 .card {
  background: #fff;
-  padding: 3rem 3.5rem; /* aumentei o espaço interno */
+  padding: 3rem 3.5rem;
   border-radius: 20px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-  width: 440px; /* aumentei a largura do card */
+  width: 440px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -84,7 +84,7 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s;
-  width: 100%; /* agora igual aos inputs */
+  width: 100%; 
   font-size: 1rem;
   margin-top: 0.5rem;
   box-sizing: border-box;

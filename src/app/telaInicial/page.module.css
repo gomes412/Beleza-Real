@@ -23,7 +23,7 @@
 
 
 .flower {
-  width: 80px; 
+  width: 100px; 
   height: auto;
   margin-bottom: 15px;
 }
@@ -33,11 +33,11 @@
   font-family: "Cursive", "Great Vibes", serif;
   font-size: 100px;
   color: #2c2c2c;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 
 .subtitle {
-  font-size: 18px;
+  font-size: 30px;
   color: #444;
 }

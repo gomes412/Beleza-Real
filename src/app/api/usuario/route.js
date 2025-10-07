@@ -3,17 +3,20 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const usuario = await db.query("SELECT * FROM usuario");
-    const compartilhamento = await db.query("SELECT * FROM compartilhamento");
-    const calendario = await db.query("SELECT * FROM calendario");
-    const cuidado = await db.query("SELECT * FROM cuidado");
-    const notificacoes = await db.query("SELECT * FROM notificacoes");
-    return NextResponse.json({
-    usuario: usuario.rows,
-    compartilhamento: compartilhamento.rows,
-    calendario: calendario.rows,
-    cuidado: cuidado.rows,
-    notificacoes: notificacoes.rows,
-    });
+    return NextResponse.json(usuario.rows);
 }
 
-   
+
+export async function POST(request) {
+  try {
+    const { nome, senha, email } = await request.json()
+    await db.query(
+      'INSERT INTO usuario (nome, email, senha) VALUES ($1, $2, $3)',
+      [nome, senha, email]
+    )
+    return NextResponse.json({ status: 201 })
+  } catch (error) {
+    console.error('Error adding usuario:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+  }
+}
