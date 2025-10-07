@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; 
+  min-height: 100vh;
+  background-color: #EAC5C5;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.userName {
+  font-family: "Kotta One", serif;
+  font-weight: 400;
+  font-size: 1.325rem;
+  color: #333;
+}
+
+.title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 20px;
+  max-width: 90%;
+  line-height: 1.3;
+}
+
+.calendar {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  width: 95%;
+  max-width: 440px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.monthNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #b3004b;
+  text-transform: capitalize;
+}
+
+.monthNav button {
+  background-color: #ffd1e1;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
+
+.monthNav button:hover {
+  background-color: #ffb3c6;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  justify-items: center;
+}
+
+.day {
+  width: 42px;
+  height: 42px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.day:hover {
+  background-color: #EAC5C5;
+}
+
+.highlighted {
+  background-color: #b30000;
+  color: #fff;
+  font-weight: 600;
+}
+
+.empty {
+  width: 42px;
+  height: 42px;
+}
+
+.saveButton {
+  position: absolute;       
+  bottom: 55px;              
+  right: 20px;              
+  background-color: #d1005a; 
+  color: white;
+  border: none;
+  border-radius: 25px; 
+  padding: 10px 50px;      
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.saveButton:hover {
+  background-color: #b3004b; /* cor ao passar o mouse */
+}

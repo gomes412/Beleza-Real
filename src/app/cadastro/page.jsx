@@ -8,7 +8,6 @@ export default function Cadastro() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
-
   const router = useRouter();
 
   const handleSubmit = (e) => {
@@ -19,12 +18,13 @@ export default function Cadastro() {
       return;
     }
 
-    localStorage.setItem("usuarioNome", nome);
+    const usuario = { nome, email, senha };
+    localStorage.setItem("usuario", JSON.stringify(usuario));
+    localStorage.setItem("usuarioNome", nome); // salva separado também
 
     setErro("");
     alert(`Conta criada com sucesso!\nBem-vinda, ${nome}!`);
-
-    router.push("/calendario");
+    router.push("/login");
   };
 
   return (

@@ -8,43 +8,33 @@
   font-family: "Arial", sans-serif;
 }
 
-/* Card central */
+
 .card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  width: 350px;
+ background: #fff;
+  padding: 3rem 3.5rem; /* aumentei o espaço interno */
+  border-radius: 20px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  width: 440px; /* aumentei a largura do card */
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
+  box-sizing: border-box;
 }
 
-/* Header do card */
+
 .header {
   margin-bottom: 2rem;
 }
 
-/* Área da bonequinha + nome */
-.user {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 0.5rem;
-}
 
 .flower {
   width: 55px;
   height: auto;
+  margin-bottom: 0.5rem;
 }
 
-.username {
-  font-weight: bold;
-  color: #333;
-}
 
-/* Título e subtítulo */
 .title {
   font-size: 2rem;
   font-weight: bold;
@@ -58,54 +48,59 @@
   margin-top: 0.3rem;
 }
 
-/* Formulário */
+
 .form {
   display: flex;
   flex-direction: column;
   width: 100%; 
   gap: 1rem;
+  margin-top: 1rem;
 }
 
-/* Inputs */
+
 .input {
-  padding: 0.8rem;
+  padding: 0.9rem 1rem; 
   border: 1px solid #aaa;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
   transition: all 0.2s;
   width: 100%; 
+  box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
   border-color: #d17fa0;
-  box-shadow: 0 0 5px rgba(209, 127, 160, 0.5);
+  box-shadow: 0 0 6px rgba(209, 127, 160, 0.5);
 }
 
-/* Botão de criar conta */
+
 .button {
-  padding: 0.9rem;
+  padding: 0.9rem 1rem;
   background-color: #d17fa0;
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s;
-  margin-top: 1rem;
+  width: 100%; /* agora igual aos inputs */
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
 }
 
 .button:hover {
   background-color: #b65f83;
 }
 
-/* Mensagem de erro */
+
 .error {
   color: red;
   font-size: 0.9rem;
 }
 
-/* Link de login */
+
 .link {
   margin-top: 1rem;
   font-size: 0.9rem;

@@ -11,10 +11,17 @@ const cuidadosDefault = [
   "Empurrar cutículas",
   "Hidratar cutículas",
   "Usar base fortalecedora",
+  "Pintar as unhas", // cuidado fixo adicionado
 ];
 
 const diasSemana = [
-  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
+  "Domingo",
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
 ];
 
 export default function Page7() {
@@ -22,31 +29,37 @@ export default function Page7() {
 
   const [nome, setNome] = useState("");
   const [mensagem, setMensagem] = useState("");
-  const [cuidados, setCuidados] = useState(cuidadosDefault);
+  const [cuidados, setCuidados] = useState([]);
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
-  const [diaSelecionado, setDiaSelecionado] = useState(""); 
+  const [diaSelecionado, setDiaSelecionado] = useState("");
 
-
+  // Carregar cuidados e mesclar com defaults
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados7dias");
+    let cuidadosIniciais = [...cuidadosDefault];
+
     if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
+      const cuidadosSalvos = JSON.parse(armazenados);
+      // Mesclar default com salvos sem duplicar
+      cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
+
+    setCuidados(cuidadosIniciais);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
 
     const diaSalvo = localStorage.getItem("diaSelecionado");
-    if (diaSalvo) setDiaSelecionado(diaSalvo); 
+    if (diaSalvo) setDiaSelecionado(diaSalvo);
   }, []);
 
-  
+  // Salvar no localStorage sempre que houver mudanças
   useEffect(() => {
     localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
     if (diaSelecionado) {
-      localStorage.setItem("diaSelecionado", diaSelecionado); 
+      localStorage.setItem("diaSelecionado", diaSelecionado);
     }
   }, [cuidados, diaSelecionado]);
 
@@ -71,7 +84,7 @@ export default function Page7() {
   };
 
   const selecionarDia = (dia) => {
-    setDiaSelecionado(dia); 
+    setDiaSelecionado(dia);
   };
 
   const irDuvida = (cuidado, e) => {

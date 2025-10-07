@@ -7,7 +7,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
-
   const router = useRouter();
 
   const handleSubmit = (e) => {
@@ -18,13 +17,21 @@ export default function Login() {
       return;
     }
 
-    // Pega o nome do usuário previamente salvo no cadastro
-    // Se não tiver, salva "Usuário"
-    const nomeSalvo = localStorage.getItem("usuarioNome") || "Usuário";
-    localStorage.setItem("usuarioNome", nomeSalvo);
+    const usuarioSalvo = localStorage.getItem("usuario");
+    if (!usuarioSalvo) {
+      setErro("Nenhuma conta encontrada. Cadastre-se primeiro!");
+      return;
+    }
 
-    setErro("");
-    router.push("/calendario");
+    const usuario = JSON.parse(usuarioSalvo);
+    if (usuario.email === email && usuario.senha === senha) {
+      setErro("");
+      localStorage.setItem("usuarioNome", usuario.nome);
+      alert(`Bem-vinda de volta, ${usuario.nome}!`);
+      router.push("/calendario");
+    } else {
+      setErro("E-mail ou senha incorretos!");
+    }
   };
 
   return (
