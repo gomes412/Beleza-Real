@@ -11,7 +11,7 @@ const cuidadosDefault = [
   "Empurrar cutículas",
   "Hidratar cutículas",
   "Usar base fortalecedora",
-  "Pintar as unhas", // cuidado fixo adicionado
+  "Pintar as unhas", 
 ];
 
 const diasSemana = [
@@ -35,14 +35,12 @@ export default function Page7() {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [diaSelecionado, setDiaSelecionado] = useState("");
 
-  // Carregar cuidados e mesclar com defaults
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados7dias");
     let cuidadosIniciais = [...cuidadosDefault];
 
     if (armazenados) {
       const cuidadosSalvos = JSON.parse(armazenados);
-      // Mesclar default com salvos sem duplicar
       cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
 
@@ -55,7 +53,6 @@ export default function Page7() {
     if (diaSalvo) setDiaSelecionado(diaSalvo);
   }, []);
 
-  // Salvar no localStorage sempre que houver mudanças
   useEffect(() => {
     localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
     if (diaSelecionado) {

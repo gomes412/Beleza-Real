@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import UsuarioInfo from "@/components/UsuarioInfo"; // não precisa mais se fizemos direto
+import UsuarioInfo from "../../components/UsuarioInfo"; 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
@@ -19,7 +19,7 @@ export default function DuvidaLavarBemAsMaosEPes() {
 
   return (
     <div className={styles.container}>
-      {/* Cabeçalho */}
+     
       <header className={styles.header}>
         <div className={styles.profileLeft}>
           <img
@@ -33,7 +33,7 @@ export default function DuvidaLavarBemAsMaosEPes() {
         <h1 className={styles.title}>Lavar Bem as Mãos e Pés?</h1>
       </header>
 
-      {/* Texto explicativo */}
+     
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
@@ -57,7 +57,7 @@ export default function DuvidaLavarBemAsMaosEPes() {
         </p>
       </div>
 
-      {/* Botão Voltar */}
+     
       <div className={styles.buttonContainer}>
         <button onClick={handleVoltar} className={styles.voltarButton}>
           Voltar

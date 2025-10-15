@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Cuidados fixos
 const cuidadosFixos = [
   "Esfoliação mais profunda",
   "Trocar lâmina de depilação",
@@ -21,7 +20,6 @@ export default function Page15_3() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carregar do localStorage e garantir cuidados fixos
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados15dias3");
     let cuidadosSalvos = [];
@@ -29,13 +27,13 @@ export default function Page15_3() {
       cuidadosSalvos = JSON.parse(armazenados);
     }
 
-    // Garantir que os fixos estão presentes
+
     const cuidadosCompletos = cuidadosFixos.map((c) => {
       const achado = cuidadosSalvos.find((item) => item.nome === c);
       return achado ? achado : { nome: c, data: "" };
     });
 
-    // Incluir cuidados adicionados que não são fixos
+   
     const adicionais = cuidadosSalvos.filter(
       (item) => item.nome && !cuidadosFixos.includes(item.nome)
     );
@@ -46,12 +44,12 @@ export default function Page15_3() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar sempre que mudar
+
   useEffect(() => {
     localStorage.setItem("cuidados15dias3", JSON.stringify(cuidados));
   }, [cuidados]);
 
-  // Adicionar novo cuidado
+
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
@@ -61,33 +59,33 @@ export default function Page15_3() {
     setAdicionando(false);
   };
 
-  // Excluir cuidado
+  
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((prev) => prev.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
-  // Alternar item selecionado
+
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // Abrir página de dúvida
+
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
     const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
     router.push(caminho);
   };
 
-  // Alterar data do cuidado
+ 
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
     );
   };
 
-  // Gerar próximas datas de 15 em 15 dias
+
   const gerarProximasDatas = (dataInicial) => {
     if (!dataInicial) return [];
     const datas = [];
@@ -102,7 +100,7 @@ export default function Page15_3() {
 
   return (
     <div className={styles.container}>
-      {/* Cabeçalho */}
+   
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
@@ -135,11 +133,11 @@ export default function Page15_3() {
         </div>
       </header>
 
-      {/* Lista de cuidados */}
+ 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados
-            .filter((item) => item.nome && item.nome.trim() !== "") // filtra vazios
+            .filter((item) => item.nome && item.nome.trim() !== "")
             .map((item, idx) => (
               <li
                 key={idx}
@@ -149,7 +147,7 @@ export default function Page15_3() {
                 <div style={{ flex: 1 }}>
                   <span className={styles.cuidadoText}>{item.nome}</span>
 
-                  {/* Campo de data */}
+
                   <div
                     style={{
                       marginTop: "6px",
@@ -176,7 +174,7 @@ export default function Page15_3() {
                     />
                   </div>
 
-                  {/* Exibir próximas datas */}
+              
                   {item.data && (
                     <div
                       style={{
@@ -228,7 +226,7 @@ export default function Page15_3() {
             ))}
         </ul>
 
-        {/* Adicionar novo cuidado */}
+      
         {adicionando && (
           <div className={styles.addSection}>
             <input

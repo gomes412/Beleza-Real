@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Cuidados fixos (rosto)
+
 const cuidadosFixos = [
   "Limpeza facial profissional",
   "Máscara de colágeno",
@@ -21,7 +21,7 @@ export default function Page30Rosto() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carregar do localStorage e garantir cuidados fixos
+  
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados30diasRosto");
     let cuidadosSalvos = [];
@@ -44,7 +44,7 @@ export default function Page30Rosto() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar no localStorage
+ 
   useEffect(() => {
     localStorage.setItem("cuidados30diasRosto", JSON.stringify(cuidados));
   }, [cuidados]);

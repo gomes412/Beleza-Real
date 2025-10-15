@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Cuidados fixos (corpo)
+
 const cuidadosFixos = [
   "Limpeza profunda do corpo",
   "Check de roupas íntimas",
@@ -21,7 +21,7 @@ export default function Page30_1() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carregar do localStorage e garantir cuidados fixos
+  
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados30dias1");
     let cuidadosSalvos = [];
@@ -44,7 +44,7 @@ export default function Page30_1() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar no localStorage
+  
   useEffect(() => {
     localStorage.setItem("cuidados30dias1", JSON.stringify(cuidados));
   }, [cuidados]);

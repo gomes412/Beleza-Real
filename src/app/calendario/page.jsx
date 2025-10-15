@@ -25,14 +25,6 @@ export default function Personalize() {
         </div>
 
         <div className={styles.headerIcons}>
-          <a href="/home" className={styles.headerIcon}>
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Início"
-              className={styles.iconImage}
-            />
-          </a>
-          <a href="/configuracoes" className={styles.headerIcon}>⚙️</a>
         </div>
       </header>
 

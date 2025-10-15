@@ -5,14 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
-const cuidadosFixos = [
-  "Limpeza de cravos",
-  "Máscara calmante",
-  "Uso de óleo facial nutritivo",
-];
-
-export default function Page15Face() {
+export default function Personalizar1() {
   const router = useRouter();
 
   const [cuidados, setCuidados] = useState([]);
@@ -21,86 +14,54 @@ export default function Page15Face() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
- 
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados15diasFace");
-    let cuidadosSalvos = [];
-    if (armazenados) {
-      cuidadosSalvos = JSON.parse(armazenados);
-    }
-
-
-    const cuidadosCompletos = cuidadosFixos.map((c) => {
-      const achado = cuidadosSalvos.find((item) => item.nome === c);
-      return achado ? achado : { nome: c, data: "" };
-    });
-
-   
-    const adicionais = cuidadosSalvos.filter(
-      (item) => item.nome && !cuidadosFixos.includes(item.nome)
-    );
-
-    setCuidados([...cuidadosCompletos, ...adicionais]);
+    const armazenados = localStorage.getItem("personalizar1");
+    if (armazenados) setCuidados(JSON.parse(armazenados));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
- 
   useEffect(() => {
-    localStorage.setItem("cuidados15diasFace", JSON.stringify(cuidados));
+    localStorage.setItem("personalizar1", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
-    setCuidados((prev) => [...prev, { nome: v, data: "" }]);
+    setCuidados((prev) => [
+      ...prev,
+      { nome: v, data: "", repetir: "uma-vez" },
+    ]);
     setNome("");
     setAdicionando(false);
   };
 
-  
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((prev) => prev.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
- 
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  
-  const irDuvida = (cuidado, e) => {
-    if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
-  };
-
-  
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
     );
   };
 
-  const gerarProximasDatas = (dataInicial) => {
-    if (!dataInicial) return [];
-    const datas = [];
-    const inicio = new Date(dataInicial);
-    for (let i = 0; i < 6; i++) {
-      const nova = new Date(inicio);
-      nova.setDate(inicio.getDate() + i * 15);
-      datas.push(nova.toLocaleDateString("pt-BR"));
-    }
-    return datas;
+  const handleRepetirChange = (index, value) => {
+    setCuidados((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, repetir: value } : item))
+    );
   };
 
   return (
     <div className={styles.container}>
-      
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
@@ -111,7 +72,7 @@ export default function Page15Face() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>A cada 15 dias</h1>
+        <h1 className={styles.title}>seu bem-estar aqui: cadastre exames, consultas e medicações</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -133,7 +94,6 @@ export default function Page15Face() {
         </div>
       </header>
 
-   
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados
@@ -147,13 +107,13 @@ export default function Page15Face() {
                 <div style={{ flex: 1 }}>
                   <span className={styles.cuidadoText}>{item.nome}</span>
 
-                 
                   <div
                     style={{
                       marginTop: "6px",
                       display: "flex",
                       alignItems: "center",
                       gap: "8px",
+                      flexWrap: "wrap",
                     }}
                   >
                     <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
@@ -172,46 +132,25 @@ export default function Page15Face() {
                         fontSize: "0.95rem",
                       }}
                     />
-                  </div>
 
-                
-                  {item.data && (
-                    <div
+                    <select
+                      value={item.repetir}
+                      onChange={(e) => handleRepetirChange(idx, e.target.value)}
                       style={{
-                        marginTop: "6px",
-                        fontFamily: "Kotta One, serif",
-                        fontSize: "0.9rem",
-                        color: "#333",
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #cbb",
+                        fontFamily: "serif",
+                        fontSize: "0.95rem",
                       }}
                     >
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "#b18b8b",
-                          display: "block",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        Próximas datas:
-                      </span>
-                      <ul style={{ marginLeft: "18px", marginTop: "2px" }}>
-                        {gerarProximasDatas(item.data).map((data, i) => (
-                          <li key={i}>{data}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                      <option value="uma-vez">Uma vez</option>
+                      <option value="repetir-mes">Repetir todo mês</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className={styles.itemActions}>
-                  <button
-                    className={styles.duvidaBtn}
-                    onClick={(e) => irDuvida(item.nome, e)}
-                    aria-label={`Dúvida sobre ${item.nome}`}
-                  >
-                    ?
-                  </button>
-
                   {selecionado === idx && (
                     <button
                       className={styles.excluirBtn}
@@ -226,7 +165,6 @@ export default function Page15Face() {
             ))}
         </ul>
 
-      
         {adicionando && (
           <div className={styles.addSection}>
             <input
@@ -251,7 +189,7 @@ export default function Page15Face() {
         )}
       </section>
 
-      <Link href="/rosto" className={styles.salvarBtn}>
+      <Link href="/calendario" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>

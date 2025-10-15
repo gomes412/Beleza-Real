@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
@@ -19,26 +20,34 @@ export default function Cadastro() {
     }
 
     const usuario = { nome, email, senha };
-
-    addUsuario(usuario)
-
-    setErro("");
-    alert(`Conta criada com sucesso!\nBem-vinda, ${nome}!`);
-    router.push("/login");
+    addUsuario(usuario);
   };
 
   const addUsuario = async (usuario) => {
-    const response = await fetch('/api/usuario', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(usuario),
-    })
-    if (response.ok) {
-      fetchAlunos() 
+    try {
+      const response = await fetch("/api/usuario", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(usuario),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErro(data.error || "Erro ao criar conta.");
+        return;
+      }
+
+      setErro("");
+      alert(`Conta criada com sucesso!\nBem-vinda, ${usuario.nome}!`);
+      router.push("/login");
+    } catch (err) {
+      console.error("Erro ao enviar requisição:", err);
+      setErro("Erro na conexão com o servidor.");
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -86,7 +95,7 @@ export default function Cadastro() {
         </form>
 
         <p className={styles.link}>
-          Já é usuário? <a href="/login">Faça login</a>
+          Já é usuária? <a href="/login">Faça login</a>
         </p>
       </div>
     </div>

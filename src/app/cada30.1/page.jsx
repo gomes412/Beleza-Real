@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Cuidados fixos (pés)
+
 const cuidadosFixos = [
   "Tratamento nutritivo",
   "Hidratação profunda dos pés",
@@ -21,7 +21,7 @@ export default function Page30() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carregar do localStorage e garantir cuidados fixos
+ 
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados30dias");
     let cuidadosSalvos = [];
@@ -44,7 +44,7 @@ export default function Page30() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // Salvar no localStorage
+ 
   useEffect(() => {
     localStorage.setItem("cuidados30dias", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -80,7 +80,7 @@ export default function Page30() {
     );
   };
 
-  // Gerar próximas datas de 30 em 30 dias
+  
   const gerarProximasDatas = (dataInicial) => {
     if (!dataInicial) return [];
     const datas = [];
@@ -140,7 +140,7 @@ export default function Page30() {
                 <div style={{ flex: 1 }}>
                   <span className={styles.cuidadoText}>{item.nome}</span>
 
-                  {/* Escolher data */}
+                
                   <div
                     style={{
                       marginTop: "6px",
@@ -167,7 +167,7 @@ export default function Page30() {
                     />
                   </div>
 
-                  {/* Próximas datas */}
+                
                   {item.data && (
                     <div
                       style={{
