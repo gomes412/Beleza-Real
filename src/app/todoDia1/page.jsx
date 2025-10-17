@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
 const cuidadosDefault = [
   "Lavar Bem as Mãos e Pés",
   "Hidratante Para Mãos e Pés",
@@ -15,22 +14,20 @@ export default function PageTodosDias() {
   const router = useRouter();
 
   const [nome, setNome] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const [cuidados, setCuidados] = useState(cuidadosDefault);
+  const [cuidados, setCuidados] = useState([]);
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-
+  // Carrega dados ao iniciar
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidadosDiarios");
     if (armazenados) {
       const cuidadosSalvos = JSON.parse(armazenados);
-    
-      const combinados = [...new Set([...cuidadosDefault, ...cuidadosSalvos])];
+      // Junta os fixos e os salvos (sem duplicar)
+      const combinados = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
       setCuidados(combinados);
     } else {
-   
       setCuidados(cuidadosDefault);
     }
 
@@ -40,38 +37,22 @@ export default function PageTodosDias() {
 
  
   useEffect(() => {
-    const cuidadosPersonalizados = cuidados.filter(
-      (item) => !cuidadosDefault.includes(item)
-    );
-    localStorage.setItem(
-      "cuidadosDiarios",
-      JSON.stringify(cuidadosPersonalizados)
-    );
+    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
   }, [cuidados]);
 
-
+  
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
-    if (!v) return;
-    if (cuidados.includes(v)) {
-      setMensagem("Esse cuidado já existe!");
-      return;
-    }
+    if (!v || cuidados.includes(v)) return;
     setCuidados((p) => [...p, v]);
     setNome("");
     setAdicionando(false);
-    setMensagem("Cuidado adicionado com sucesso!");
   };
 
-  
+
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
-    const item = cuidados[index];
-    if (cuidadosDefault.includes(item)) {
-      setMensagem("Esse cuidado é fixo e não pode ser excluído!");
-      return;
-    }
     setCuidados((p) => p.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
@@ -80,7 +61,7 @@ export default function PageTodosDias() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  
+
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
 
@@ -89,7 +70,7 @@ export default function PageTodosDias() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-"); 
+      .replace(/\s+/g, "-");
 
     const caminho = `/duvida-${normalizado}`;
     router.push(caminho);
@@ -124,12 +105,7 @@ export default function PageTodosDias() {
             +
           </button>
 
-          <Link
-            href="/home"
-            className={styles.homeLink}
-            aria-label="Home"
-            title="Home"
-          >
+          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
               alt="Home"
@@ -139,15 +115,12 @@ export default function PageTodosDias() {
         </div>
       </header>
 
-     
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados.map((item, idx) => (
             <li
               key={idx}
-              className={`${styles.cuidadoItem} ${
-                cuidadosDefault.includes(item) ? styles.cuidadoFixo : ""
-              }`}
+              className={styles.cuidadoItem}
               onClick={() => toggleSelecionado(idx)}
             >
               <span className={styles.cuidadoText}>{item}</span>
@@ -161,7 +134,7 @@ export default function PageTodosDias() {
                   ?
                 </button>
 
-                {selecionado === idx && !cuidadosDefault.includes(item) && (
+                {selecionado === idx && (
                   <button
                     className={styles.excluirBtn}
                     onClick={(e) => handleExcluir(idx, e)}
@@ -175,7 +148,7 @@ export default function PageTodosDias() {
           ))}
         </ul>
 
-      
+  
         {adicionando && (
           <div className={styles.addSection}>
             <input
@@ -200,10 +173,7 @@ export default function PageTodosDias() {
         )}
       </section>
 
-   
-      {mensagem && <p className={styles.mensagem}>{mensagem}</p>}
-
-    
+     
       <Link href="/unhas" className={styles.salvarBtn}>
         Voltar
       </Link>
