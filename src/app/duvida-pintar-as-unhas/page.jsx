@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaHidratarBemAsMaosEPes() {
+export default function DuvidaPintar() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaHidratarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia1");
+    router.push("/cada7.1");
   };
 
   return (
@@ -29,28 +29,23 @@ export default function DuvidaHidratarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratar mãos e pés</h1>
+          <h1 className={styles.title}>Pintar as unhas</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-          Para evitar ressecamento, fissuras e o envelhecimento precoce é essencial 
-          manter uma rotina de hidratação da pele.
+          É um ritual de autocuidado que pode aumentar a autoestima e proteger a unha contra danos.
         </p>
-
         <h2>Como fazer:</h2>
         <p>
-          <strong>Mãos:</strong> Use hidratante específico para mãos, geralmente, 
-          são indicadas as fórmulas que contenham silicone, 
-          sempre que achar necessário.
-        </p>
-        <p>
-          <strong>Pés:</strong> Hidrate os pés com cremes hidratantes que contenham uréia na fórmula.
+        Após aplicar a base fortalecedora, pinte as unhas com camadas finas e uniformes 
+        de esmalte, intercalando com um intervalo para secagem. Use um palito para 
+        limpar o excesso de esmalte nas bordas entre as camadas. Ao final, remova os 
+        borrados com um algodão com removedor de esmalte e finalize com top coat.
         </p>
       </div>
-
       <div className={styles.buttonContainer}>
         <button onClick={handleVoltar} className={styles.voltarButton}>
           Voltar

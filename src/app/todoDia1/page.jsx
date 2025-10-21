@@ -19,12 +19,12 @@ export default function PageTodosDias() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // Carrega dados ao iniciar
+
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidadosDiarios");
     if (armazenados) {
       const cuidadosSalvos = JSON.parse(armazenados);
-      // Junta os fixos e os salvos (sem duplicar)
+   
       const combinados = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
       setCuidados(combinados);
     } else {

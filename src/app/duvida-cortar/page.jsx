@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaHidratarBemAsMaosEPes() {
+export default function DuvidaCortar() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaHidratarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia1");
+    router.push("/cada7.1");
   };
 
   return (
@@ -29,25 +29,22 @@ export default function DuvidaHidratarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratar mãos e pés</h1>
+          <h1 className={styles.title}>Cortar Unhas</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-          Para evitar ressecamento, fissuras e o envelhecimento precoce é essencial 
-          manter uma rotina de hidratação da pele.
+          Unhas grandes geram mau odor, micose e ficam mais propensas a encravar, 
+          portanto o ideal é que, uma vez por semana, você as corte.
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          <strong>Mãos:</strong> Use hidratante específico para mãos, geralmente, 
-          são indicadas as fórmulas que contenham silicone, 
-          sempre que achar necessário.
-        </p>
-        <p>
-          <strong>Pés:</strong> Hidrate os pés com cremes hidratantes que contenham uréia na fórmula.
+         Corte-as com uma tesourinha própria para as unhas. 
+         E, nas unhas dos pés, evite cortar as laterais em formato arredondado, 
+         pois pode gerar o encravamento das unhas, portanto busque cortá-las em formato reto.
         </p>
       </div>
 

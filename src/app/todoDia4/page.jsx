@@ -9,7 +9,7 @@ const cuidadosDefault = [
   "Lavar",
   "Tônico",
   "Hidratante",
-  // removemos "Protetor solar" daqui
+  
 ];
 
 export default function TodoDia4() {
@@ -100,7 +100,7 @@ export default function TodoDia4() {
 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
-          {/* Cuidados normais */}
+         
           {cuidados.map((item, idx) => (
             <li
               key={idx}
@@ -134,7 +134,7 @@ export default function TodoDia4() {
             </li>
           ))}
 
-          {/* Protetor solar fixo no fim, agora com botão de dúvida */}
+   
           <li className={styles.cuidadoItem}>
             <span className={styles.cuidadoText}>Protetor solar</span>
 

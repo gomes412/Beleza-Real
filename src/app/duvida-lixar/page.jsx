@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaHidratarBemAsMaosEPes() {
+export default function DuvidaLixar() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaHidratarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia1");
+    router.push("/cada7.1");
   };
 
   return (
@@ -29,25 +29,25 @@ export default function DuvidaHidratarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratar mãos e pés</h1>
+          <h1 className={styles.title}>Lixar unhas</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-          Para evitar ressecamento, fissuras e o envelhecimento precoce é essencial 
-          manter uma rotina de hidratação da pele.
+          Lixar as unhas vai deixar suas unhas mais bonitas e bem cuidadas, mas, 
+          além disso, o ato de lixar é a chance de remover impurezas e células mortas 
+          e de corrigir possíveis falhas de crescimento.
+
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          <strong>Mãos:</strong> Use hidratante específico para mãos, geralmente, 
-          são indicadas as fórmulas que contenham silicone, 
-          sempre que achar necessário.
-        </p>
-        <p>
-          <strong>Pés:</strong> Hidrate os pés com cremes hidratantes que contenham uréia na fórmula.
+         Lixe as unhas na mesma direção, evitando o movimento “vai e vem”, 
+         começando nas extremidades dos cantos ao centro de acordo com o 
+         formato de sua preferência. As lixas utilizadas na ação devem ser 
+         macias e delicadas, para que não haja agressão na saúde das unhas.
         </p>
       </div>
 

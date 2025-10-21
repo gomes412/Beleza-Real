@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaHidratarBemAsMaosEPes() {
+export default function duvidaempurrarcuticulas() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaHidratarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia1");
+    router.push("/cada7.1");
   };
 
   return (
@@ -29,25 +29,26 @@ export default function DuvidaHidratarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratar mãos e pés</h1>
+          <h1 className={styles.title}>Empurrar cutículas</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-          Para evitar ressecamento, fissuras e o envelhecimento precoce é essencial 
-          manter uma rotina de hidratação da pele.
+          Previne infecções, mantém a hidratação, protege a matriz ungueal 
+          (parte da unha que determina o seu crescimento) e evita a onicomicose.
+
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          <strong>Mãos:</strong> Use hidratante específico para mãos, geralmente, 
-          são indicadas as fórmulas que contenham silicone, 
-          sempre que achar necessário.
-        </p>
-        <p>
-          <strong>Pés:</strong> Hidrate os pés com cremes hidratantes que contenham uréia na fórmula.
+        Aplique uma pequena quantidade do amolecedor de cutículas sobre 
+        as cutículas limpas e secas. Aguarde o tempo indicado na embalagem do produto, 
+        geralmente entre 2 a 5 minutos. Em seguida, utilize um empurrador de cutículas 
+        para empurrar delicadamente a pele amolecida em direção à base da unha. Após 
+        empurrar as cutículas, lave as mãos com água e sabão para remover o excesso 
+        de produto e finalize com um hidratante específico para cutículas.
         </p>
       </div>
 

@@ -9,7 +9,6 @@ const cuidadosDefault = [
   "Cortar",
   "Lixar",
   "Empurrar cutículas",
-  "Hidratar cutículas",
   "Usar base fortalecedora",
   "Pintar as unhas", 
 ];
@@ -43,6 +42,9 @@ export default function Page7() {
       const cuidadosSalvos = JSON.parse(armazenados);
       cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
+
+    // Filtra "Hidratar cutículas" se estiver na lista
+    cuidadosIniciais = cuidadosIniciais.filter(cuidado => cuidado !== "Hidratar cutículas");
 
     setCuidados(cuidadosIniciais);
 
@@ -86,7 +88,13 @@ export default function Page7() {
 
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
+
+    const caminho = `/duvida-${cuidado
+      .toLowerCase() 
+      .normalize("NFD") 
+      .replace(/[\u0300-\u036f]/g, "") 
+      .replace(/\s+/g, "-")}`;
+
     router.push(caminho);
   };
 

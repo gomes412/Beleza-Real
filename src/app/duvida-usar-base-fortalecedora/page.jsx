@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaHidratarBemAsMaosEPes() {
+export default function DuvidausarBaseFortalecedora() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaHidratarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia1");
+    router.push("/cada7.1");
   };
 
   return (
@@ -29,25 +29,21 @@ export default function DuvidaHidratarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratar mãos e pés</h1>
+          <h1 className={styles.title}>Usar base fortalecedora</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-          Para evitar ressecamento, fissuras e o envelhecimento precoce é essencial 
-          manter uma rotina de hidratação da pele.
+          É um produto especialmente formulado para proteger e fortalecer as unhas, agindo como uma camada de tratamento.
+
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          <strong>Mãos:</strong> Use hidratante específico para mãos, geralmente, 
-          são indicadas as fórmulas que contenham silicone, 
-          sempre que achar necessário.
-        </p>
-        <p>
-          <strong>Pés:</strong> Hidrate os pés com cremes hidratantes que contenham uréia na fórmula.
+         Após remover o esmalte (caso esteja com algum) e fazer a cuticulagem, 
+         aplique a base fortalecedora.
         </p>
       </div>
 
