@@ -43,7 +43,7 @@ export default function Page7() {
       cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
 
-    // Filtra "Hidratar cutículas" se estiver na lista
+    
     cuidadosIniciais = cuidadosIniciais.filter(cuidado => cuidado !== "Hidratar cutículas");
 
     setCuidados(cuidadosIniciais);
