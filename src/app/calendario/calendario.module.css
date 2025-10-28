@@ -4,7 +4,7 @@
   align-items: center;
   background: #EAC5C5;
   min-height: 100vh;
-  padding: 20px;
+  padding: 10px;
   font-family: "Poppins", sans-serif;
 }
 
@@ -58,7 +58,7 @@
 .title {
   font-size: 2rem;
   color: #4a2e2e;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-weight: 700;
   text-align: center;
 }
@@ -115,7 +115,7 @@
 
 
 .saveButton {
-  background: #d9a5b3;
+  background: #C7355C;
   color: white;
   border: none;
   border-radius: 12px;
@@ -125,7 +125,7 @@
   cursor: pointer;
   transition: background 0.2s ease;
   display: inline-block;
-  margin-top: 30px; 
+  margin-top: 15px; 
 }
 
 .saveButton:hover {
