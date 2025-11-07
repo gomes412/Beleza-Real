@@ -5,48 +5,32 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+const cuidadosDefault = [
+  "Proteção Térmica ou Ambiental",
+  "Hidratação Leve (Umectação Rápida ou Spray Hidratante)",
+  "Massagem Leve no Couro Cabeludo",
+];
+
 export default function PageTodosDias() {
   const router = useRouter();
 
   const [nome, setNome] = useState("");
-  const [cuidados, setCuidados] = useState([]);
+  const [cuidados, setCuidados] = useState(cuidadosDefault);
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-
-  const cuidadosPadrao = [
-    "Lavar Bem as Mãos e Pés",
-    "Hidratante Para Mãos e Pés",
-  ];
-
- 
   useEffect(() => {
-    try {
-      localStorage.removeItem("cuidadosDiarios");
-    } catch (err) {
-    
-      console.warn("localStorage não disponível:", err);
-    }
-
-    setCuidados(cuidadosPadrao);
-    try {
-      localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidadosPadrao));
-    } catch (err) {
-      console.warn("Erro ao gravar localStorage:", err);
-    }
+   
+    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidadosDefault));
+    setCuidados(cuidadosDefault);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
- 
   useEffect(() => {
-    try {
-      localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
-    } catch (err) {
-      console.warn("Erro ao gravar localStorage:", err);
-    }
+    localStorage.setItem("cuidadosDiarios", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
@@ -177,7 +161,7 @@ export default function PageTodosDias() {
         )}
       </section>
 
-      <Link href="/unhas" className={styles.salvarBtn}>
+      <Link href="/cabelo" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>
