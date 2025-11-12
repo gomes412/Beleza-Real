@@ -6,43 +6,61 @@ export async function middleware(req) {
     const { pathname } = req.nextUrl;
 
     const precisaAuth =
-        pathname.startsWith("/perfil") ||
-        pathname.startsWith("/usuario") ||
-        pathname.startsWith("/historico") ||
-        pathname.startsWith("/clientes");
+        pathname.startsWith("/login") ||
+        pathname.startsWith("/todoDia1") ||
+        pathname.startsWith("/todoDia2") ||
+        pathname.startsWith("/todoDia3") ||
+        pathname.startsWith("/todoDia4") ||
+        pathname.startsWith("/cada7.1") ||
+        pathname.startsWith("/cada7.2") ||
+        pathname.startsWith("/cada7.3") ||
+        pathname.startsWith("/cada7.4") ||
+        pathname.startsWith("/cada15.1") ||
+        pathname.startsWith("/cada15.2") ||
+        pathname.startsWith("/cada15.3") ||
+        pathname.startsWith("/cada15.4") ||
+        pathname.startsWith("/cada30.1") ||
+        pathname.startsWith("/cada30.2") ||
+        pathname.startsWith("/cada30.3") ||
+        pathname.startsWith("/cada30.4") ||
+        pathname.startsWith("/personalizar1") ||
+        pathname.startsWith("/personalizar2") ||
+        pathname.startsWith("/personalizar3") ||
+        pathname.startsWith("/personalizar4");
 
-    //caso seja necessário autenticação e não se tenha um token
-    //então se monta uma URL de redirecionamento para a página de login e depopis
-    //adiciona callbackUrl para, após logar, você poder voltar o 
-    // usuário para onde ele estava indo.
+    
     if (precisaAuth && !token) {
         const url = new URL("/login", req.url);
         url.searchParams.set("callbackUrl", pathname);
         return NextResponse.redirect(url);
     }
 
-    //para as suas rotas de admin
-    //primeiramente se não estiver logado (!token), manda para fazer login.
-    //Depois quando estiver logado mas não for admin (token.role !== "admin"), então redireciona 
-    //para uma página de acesso negado (/nao-autorizado).
-    /*
-    if (pathname.startsWith("/admin")) {
-        if (!token) return NextResponse.redirect(new URL("/novoLogin", req.url));
-        if (token.role !== "admin")
-            return NextResponse.redirect(new URL("/nao-autorizado", req.url));
-    }
-    */
+   
     return NextResponse.next();
 }
 
-//O middleware vai interceptar essas rotas, sendo que o
-// :path* significa: qualquer subrota.
+
 export const config = {
     matcher: [
-        "/perfil/:path*",
-        "/usuario/:path*",
-        "/historico/:path*",
-        "/clientes/:path*",
-        "/admin/:path*",
+       "/todoDia1/:path*",
+        "/todoDia2/:path*",
+        "/todoDia3/:path*",
+        "/todoDia4/:path*",
+        "/cada7.1/:path*",
+        "/cada7.2/:path*",
+        "/cada7.3/:path*",
+        "/cada7.4/:path*",
+        "/cada15.1/:path*",
+        "/cada15.2/:path*",
+        "/cada15.3/:path*",
+        "/cada15.4/:path*",
+        "/cada30.1/:path*",
+        "/cada30.2/:path*",
+        "/cada30.3/:path*",
+        "/cada30.4/:path*",
+        "/personalizar1/:path*",
+        "/personalizar2/:path*",
+        "/personalizar3/:path*",
+        "/personalizar4/:path*",
     ],
 };
