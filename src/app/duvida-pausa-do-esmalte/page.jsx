@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaLavarBemAsMaosEPes() {
+export default function DuvidaLixar() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaLavarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia2");
+    router.push("/cada30.1");
   };
 
   return (
@@ -29,22 +29,24 @@ export default function DuvidaLavarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratação leve (umectação rápida ou spray hidratante)?</h1>
+          <h1 className={styles.title}>Pausa do Esmalte</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-         Manter os fios hidratados impede que fiquem opacos, quebradiços ou com pontas duplas.
+         O uso ininterrupto de esmalte causa ressecamento e enfraquecimento 
+         das unhas, por isso a necessidade dessa pausa.
+
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          Use um spray ou leave-in ou óleo reparador de pontas adequado para o seu tipo de cabelo 
-          (por ex., com aminoácidos, pantenol). Aplique nas pontas ou ao longo dos fios antes de dormir ou ao sair.
-
-
+         Lixe as unhas na mesma direção, evitando o movimento “vai e vem”, 
+         começando nas extremidades dos cantos ao centro de acordo com o 
+         formato de sua preferência. As lixas utilizadas na ação devem ser 
+         macias e delicadas, para que não haja agressão na saúde das unhas.
         </p>
       </div>
 

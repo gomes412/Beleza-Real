@@ -5,12 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
-const cuidadosFixos = [
-  "Tratamento nutritivo",
-  "Hidratação profunda dos pés",
-  "Polimento para brilho natural",
-];
+const cuidadosFixos = ["Pausa do Esmalte"];
 
 export default function Page30() {
   const router = useRouter();
@@ -21,30 +16,17 @@ export default function Page30() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
- 
+  // 🔥 SEMPRE carregar apenas "Pausa do Esmalte"
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados30dias");
-    let cuidadosSalvos = [];
-    if (armazenados) {
-      cuidadosSalvos = JSON.parse(armazenados);
-    }
+    const cuidadoUnico = [{ nome: "Pausa do Esmalte", data: "" }];
 
-    const cuidadosCompletos = cuidadosFixos.map((c) => {
-      const achado = cuidadosSalvos.find((item) => item.nome === c);
-      return achado ? achado : { nome: c, data: "" };
-    });
-
-    const adicionais = cuidadosSalvos.filter(
-      (item) => item.nome && !cuidadosFixos.includes(item.nome)
-    );
-
-    setCuidados([...cuidadosCompletos, ...adicionais]);
+    setCuidados(cuidadoUnico);
+    localStorage.setItem("cuidados30dias", JSON.stringify(cuidadoUnico));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
- 
   useEffect(() => {
     localStorage.setItem("cuidados30dias", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -80,7 +62,6 @@ export default function Page30() {
     );
   };
 
-  
   const gerarProximasDatas = (dataInicial) => {
     if (!dataInicial) return [];
     const datas = [];
@@ -140,7 +121,6 @@ export default function Page30() {
                 <div style={{ flex: 1 }}>
                   <span className={styles.cuidadoText}>{item.nome}</span>
 
-                
                   <div
                     style={{
                       marginTop: "6px",
@@ -167,7 +147,6 @@ export default function Page30() {
                     />
                   </div>
 
-                
                   {item.data && (
                     <div
                       style={{

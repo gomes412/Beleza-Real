@@ -6,57 +6,75 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 const cuidadosDefault = [
-  { nome: "Esfoliar pés e mãos", data: "" },
-  { nome: "Aplicar óleo hidratante", data: "" },
+  "Máscara de tratamento profundo ou hidratação intensiva",
+  "Remoção de resíduos/produtos acumulados no couro cabeludo (ex: ritual de limpeza leve ou co-wash)",
+  "Aplicar proteína leve ou tratamento reconstrutor",
 ];
 
-export default function Page15() {
+// ❗ Slugs curtos para URLs amigáveis
+const slugs = {
+  "Máscara de tratamento profundo ou hidratação intensiva": "mascara-hidratacao",
+  "Remoção de resíduos/produtos acumulados no couro cabeludo (ex: ritual de limpeza leve ou co-wash)": "remocao-residuos",
+  "Aplicar proteína leve ou tratamento reconstrutor": "proteina-reconstrucao",
+};
+
+const diasSemana = [
+  "Domingo",
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
+];
+
+export default function Page7() {
   const router = useRouter();
 
-  const [cuidados, setCuidados] = useState([]);
   const [nome, setNome] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [cuidados, setCuidados] = useState([]);
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
+  const [diaSelecionado, setDiaSelecionado] = useState("");
 
+  // 🔥 Sempre inicia somente com os 3 novos cuidados
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados15dias");
+    const cuidadosIniciais = [...cuidadosDefault];
 
-    if (armazenados) {
-      const lista = JSON.parse(armazenados);
+    // Limpa e salva somente os cuidados novos
+    localStorage.setItem("cuidados7dias", JSON.stringify(cuidadosIniciais));
 
-      if (lista.length !== cuidadosDefault.length) {
-        setCuidados(cuidadosDefault);
-        localStorage.setItem("cuidados15dias", JSON.stringify(cuidadosDefault));
-      } else {
-        setCuidados(lista);
-      }
-    } else {
-      setCuidados(cuidadosDefault);
-    }
+    setCuidados(cuidadosIniciais);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
+
+    const diaSalvo = localStorage.getItem("diaSelecionado");
+    if (diaSalvo) setDiaSelecionado(diaSalvo);
   }, []);
 
   useEffect(() => {
-    if (cuidados.length > 0) {
-      localStorage.setItem("cuidados15dias", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados7dias", JSON.stringify(cuidados));
+    if (diaSelecionado) {
+      localStorage.setItem("diaSelecionado", diaSelecionado);
     }
-  }, [cuidados]);
+  }, [cuidados, diaSelecionado]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
-    setCuidados((prev) => [...prev, { nome: v, data: "" }]);
+    setCuidados((p) => [...p, v]);
     setNome("");
     setAdicionando(false);
+    setMensagem("Cuidado adicionado com sucesso!");
   };
 
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
-    setCuidados((prev) => prev.filter((_, i) => i !== index));
+    setCuidados((p) => p.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
@@ -64,37 +82,23 @@ export default function Page15() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // ⭐ FUNÇÃO CORRIGIDA PARA REMOVER ACENTOS ⭐
+  const selecionarDia = (dia) => {
+    setDiaSelecionado(dia);
+  };
+
+  // ✔ Agora a URL usa slugs curtos em vez do texto gigante
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
 
-    const nomeSemAcento = cuidado
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+    const slug =
+      slugs[cuidado] ||
+      cuidado
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-");
 
-    const caminho = `/duvida-${nomeSemAcento
-      .toLowerCase()
-      .replace(/\s+/g, "-")}`;
-
-    router.push(caminho);
-  };
-
-  const handleDataChange = (index, value) => {
-    const atualizados = [...cuidados];
-    atualizados[index].data = value;
-    setCuidados(atualizados);
-  };
-
-  const gerarProximasDatas = (dataInicial) => {
-    if (!dataInicial) return [];
-    const datas = [];
-    const inicio = new Date(dataInicial);
-    for (let i = 0; i < 6; i++) {
-      const nova = new Date(inicio);
-      nova.setDate(inicio.getDate() + i * 15);
-      datas.push(nova.toLocaleDateString("pt-BR"));
-    }
-    return datas;
+    router.push(`/duvida-${slug}`);
   };
 
   return (
@@ -102,24 +106,30 @@ export default function Page15() {
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
-            src="https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg"
+            src="/bonequinha.png"
             alt="Bonequinha"
             className={styles.logo}
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg";
+            }}
           />
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>A cada 15 dias</h1>
+        <h1 className={styles.title}>A cada 7 dias</h1>
 
         <div className={styles.rightHeader}>
           <button
             className={styles.addBtn}
             onClick={() => setAdicionando(true)}
+            aria-label="Adicionar cuidado"
+            title="Adicionar"
           >
             +
           </button>
 
-          <Link href="/home" className={styles.homeLink}>
+          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
             <img
               src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
               alt="Home"
@@ -137,36 +147,13 @@ export default function Page15() {
               className={styles.cuidadoItem}
               onClick={() => toggleSelecionado(idx)}
             >
-              <div className={styles.cuidadoInfo}>
-                <span className={styles.cuidadoText}>{item.nome}</span>
-
-                <div className={styles.dataContainer}>
-                  <label className={styles.dataLabel}>Escolher data:</label>
-                  <input
-                    type="date"
-                    className={styles.dataInput}
-                    value={item.data || ""}
-                    onChange={(e) => handleDataChange(idx, e.target.value)}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                </div>
-
-                {item.data && (
-                  <div className={styles.datasList}>
-                    <span className={styles.datasTitulo}>Próximas datas:</span>
-                    <ul>
-                      {gerarProximasDatas(item.data).map((data, i) => (
-                        <li key={i}>{data}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              <span className={styles.cuidadoText}>{item}</span>
 
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => irDuvida(item.nome, e)}
+                  onClick={(e) => irDuvida(item, e)}
+                  aria-label={`Dúvida sobre ${item}`}
                 >
                   ?
                 </button>
@@ -175,6 +162,7 @@ export default function Page15() {
                   <button
                     className={styles.excluirBtn}
                     onClick={(e) => handleExcluir(idx, e)}
+                    aria-label={`Excluir ${item}`}
                   >
                     Excluir
                   </button>
@@ -206,6 +194,26 @@ export default function Page15() {
             </button>
           </div>
         )}
+      </section>
+
+      <section className={styles.diaSemanaSection}>
+        <div className={styles.diaSemanaText}>
+          Selecione qual será o dia da semana em que esse cuidado ocorrerá:
+        </div>
+
+        <div className={styles.diaSemanaButtons}>
+          {diasSemana.map((dia, index) => (
+            <button
+              key={index}
+              className={`${styles.diaBtn} ${
+                diaSelecionado === dia ? styles.diaSelecionado : ""
+              }`}
+              onClick={() => selecionarDia(dia)}
+            >
+              {dia}
+            </button>
+          ))}
+        </div>
       </section>
 
       <Link href="/unhas" className={styles.salvarBtn}>

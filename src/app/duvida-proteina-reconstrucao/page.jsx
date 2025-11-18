@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function DuvidaLavarBemAsMaosEPes() {
+export default function DuvidaHidratarBemAsMaosEPes() {
   const router = useRouter();
   const [nomeUsuario, setNomeUsuario] = useState("");
 
@@ -13,7 +13,7 @@ export default function DuvidaLavarBemAsMaosEPes() {
   }, []);
 
   const handleVoltar = () => {
-    router.push("/todoDia2");
+    router.push("/cada7.2");
   };
 
   return (
@@ -29,20 +29,21 @@ export default function DuvidaLavarBemAsMaosEPes() {
         </div>
 
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Hidratação leve (umectação rápida ou spray hidratante)?</h1>
+          <h1 className={styles.title}>Aplicar proteína leve ou tratamento reconstrutor?</h1>
         </div>
       </header>
 
       <div className={styles.textBox}>
         <h2>Para que serve:</h2>
         <p>
-         Manter os fios hidratados impede que fiquem opacos, quebradiços ou com pontas duplas.
+         Fios danificados (quebra, coloração, alisamento) precisam de proteínas para reconstrução da cutícula.
         </p>
 
         <h2>Como fazer:</h2>
         <p>
-          Use um spray ou leave-in ou óleo reparador de pontas adequado para o seu tipo de cabelo 
-          (por ex., com aminoácidos, pantenol). Aplique nas pontas ou ao longo dos fios antes de dormir ou ao sair.
+      Em cabelo que foi muito processado, escolha um produto com queratina ou aminoácidos, 
+      aplique do meio até as pontas, siga tempo indicado, enxágue.
+
 
 
         </p>

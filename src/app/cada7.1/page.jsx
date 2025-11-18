@@ -10,7 +10,7 @@ const cuidadosDefault = [
   "Lixar",
   "Empurrar cutículas",
   "Usar base fortalecedora",
-  "Pintar as unhas", 
+  "Pintar as unhas",
 ];
 
 const diasSemana = [
@@ -43,8 +43,17 @@ export default function Page7() {
       cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
 
-    
-    cuidadosIniciais = cuidadosIniciais.filter(cuidado => cuidado !== "Hidratar cutículas");
+    // Remove cuidados antigos que apareciam indevidamente
+    const cuidadosIndesejados = [
+      "Máscara de tratamento profundo ou hidratação intensiva",
+      "Remoção de resíduos/produtos acumulados no couro cabeludo (ex: ritual de limpeza leve ou co-wash)",
+      "Aplicar proteína leve ou tratamento reconstrutor",
+      "Hidratar cutículas",
+    ];
+
+    cuidadosIniciais = cuidadosIniciais.filter(
+      (c) => !cuidadosIndesejados.includes(c)
+    );
 
     setCuidados(cuidadosIniciais);
 
@@ -90,9 +99,9 @@ export default function Page7() {
     if (e) e.stopPropagation();
 
     const caminho = `/duvida-${cuidado
-      .toLowerCase() 
-      .normalize("NFD") 
-      .replace(/[\u0300-\u036f]/g, "") 
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
       .replace(/\s+/g, "-")}`;
 
     router.push(caminho);
@@ -111,7 +120,9 @@ export default function Page7() {
                 "https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg";
             }}
           />
-          <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
+          <span className={styles.profileName}>
+            {nomeUsuario || "Usuário"}
+          </span>
         </div>
 
         <h1 className={styles.title}>A cada 7 dias</h1>
@@ -202,7 +213,9 @@ export default function Page7() {
           {diasSemana.map((dia, index) => (
             <button
               key={index}
-              className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
+              className={`${styles.diaBtn} ${
+                diaSelecionado === dia ? styles.diaSelecionado : ""
+              }`}
               onClick={() => selecionarDia(dia)}
             >
               {dia}
