@@ -110,13 +110,7 @@ export default function PageTodosDias() {
             +
           </button>
 
-          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
+         
         </div>
       </header>
 

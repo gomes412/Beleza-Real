@@ -15,22 +15,7 @@ export default function Escolher() {
           <span className={styles.logoText}>BR</span>
         </div>
 
-        <div className={styles.icons}>
-          <a href="/configuracoes">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/126/126472.png"
-              alt="Configurações"
-              className={styles.iconRound}
-            />
-          </a>
-          <a href="/home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </a>
-        </div>
+
       </header>
 
       <main className={styles.main}>

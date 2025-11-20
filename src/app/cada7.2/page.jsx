@@ -11,7 +11,7 @@ const cuidadosDefault = [
   "Aplicar proteína leve ou tratamento reconstrutor",
 ];
 
-// ❗ Slugs curtos para URLs amigáveis
+
 const slugs = {
   "Máscara de tratamento profundo ou hidratação intensiva": "mascara-hidratacao",
   "Remoção de resíduos/produtos acumulados no couro cabeludo (ex: ritual de limpeza leve ou co-wash)": "remocao-residuos",
@@ -39,11 +39,11 @@ export default function Page7() {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [diaSelecionado, setDiaSelecionado] = useState("");
 
-  // 🔥 Sempre inicia somente com os 3 novos cuidados
+  
   useEffect(() => {
     const cuidadosIniciais = [...cuidadosDefault];
 
-    // Limpa e salva somente os cuidados novos
+
     localStorage.setItem("cuidados7dias", JSON.stringify(cuidadosIniciais));
 
     setCuidados(cuidadosIniciais);
@@ -86,7 +86,7 @@ export default function Page7() {
     setDiaSelecionado(dia);
   };
 
-  // ✔ Agora a URL usa slugs curtos em vez do texto gigante
+ 
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
 
@@ -129,13 +129,7 @@ export default function Page7() {
             +
           </button>
 
-          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
+        
         </div>
       </header>
 

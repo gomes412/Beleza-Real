@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 
+// 👉 APENAS OS DOIS CUIDADOS QUE VOCÊ PEDIU
 const cuidadosDefault = [
-  "Lavar",
-  "Hidratante",
-  "Protetor solar nas áreas expostas",
+  "Hidratação corporal",
+  "Protetor solar corporal",
 ];
 
 export default function TodoDia3() {
@@ -22,18 +22,36 @@ export default function TodoDia3() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
- 
+  // Carrega localStorage, mas se estiver vazio, usa apenas os dois cuidados
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidadosTodoDia3");
+
     if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
+      const lista = JSON.parse(armazenados);
+
+      // Caso a lista salva ainda tenha os cuidados antigos → substitui pelos novos
+      if (Array.isArray(lista) && lista.length > 0) {
+        const contemAntigos = lista.some(
+          item =>
+            item.toLowerCase().includes("lavar") ||
+            item.toLowerCase().includes("hidratante") ||
+            item.toLowerCase().includes("protetor solar nas áreas")
+        );
+
+        if (contemAntigos) {
+          setCuidados(cuidadosDefault);
+          localStorage.setItem("cuidadosTodoDia3", JSON.stringify(cuidadosDefault));
+        } else {
+          setCuidados(lista);
+        }
+      }
     }
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
- 
+  // Salvar automaticamente
   useEffect(() => {
     localStorage.setItem("cuidadosTodoDia3", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -42,10 +60,10 @@ export default function TodoDia3() {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
+
     setCuidados((p) => [...p, v]);
     setNome("");
     setAdicionando(false);
-    setMensagem("Cuidado adicionado com sucesso!");
   };
 
   const handleExcluir = (index, e) => {
@@ -58,15 +76,21 @@ export default function TodoDia3() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  const irDuvida = (e) => {
+  const irDuvida = (item, e) => {
     if (e) e.stopPropagation();
-    router.push("/duvidaTodoDia3");
+
+    const rota = item
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/\s+/g, "-");
+
+    router.push(`/duvida-${rota}`);
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-      
         <div className={styles.profile}>
           <img
             src="/bonequinha.png"
@@ -87,17 +111,9 @@ export default function TodoDia3() {
             className={styles.addBtn}
             onClick={() => setAdicionando(true)}
             aria-label="Adicionar cuidado"
-            title="Adicionar"
           >
             +
           </button>
-          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
         </div>
       </header>
 
@@ -114,11 +130,7 @@ export default function TodoDia3() {
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    irDuvida(e);
-                  }}
-                  aria-label={`Dúvida sobre ${item}`}
+                  onClick={(e) => irDuvida(item, e)}
                 >
                   ?
                 </button>
@@ -127,7 +139,6 @@ export default function TodoDia3() {
                   <button
                     className={styles.excluirBtn}
                     onClick={(e) => handleExcluir(idx, e)}
-                    aria-label={`Excluir ${item}`}
                   >
                     Excluir
                   </button>

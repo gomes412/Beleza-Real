@@ -43,7 +43,7 @@ export default function Page7() {
       cuidadosIniciais = [...new Set([...cuidadosSalvos, ...cuidadosDefault])];
     }
 
-    // Remove cuidados antigos que apareciam indevidamente
+   
     const cuidadosIndesejados = [
       "Máscara de tratamento profundo ou hidratação intensiva",
       "Remoção de resíduos/produtos acumulados no couro cabeludo (ex: ritual de limpeza leve ou co-wash)",
@@ -136,14 +136,7 @@ export default function Page7() {
           >
             +
           </button>
-
-          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
+          
         </div>
       </header>
 

@@ -19,13 +19,20 @@ export default function Page15() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
+  // CARREGAR DADOS DO LOCALSTORAGE
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados15dias");
 
     if (armazenados) {
       const lista = JSON.parse(armazenados);
 
-      if (lista.length !== cuidadosDefault.length) {
+      // Comparação REAL dos nomes
+      const nomesIguais =
+        JSON.stringify(lista.map((c) => c.nome)) ===
+        JSON.stringify(cuidadosDefault.map((c) => c.nome));
+
+      // Se os nomes mudaram → atualizar localStorage
+      if (!nomesIguais) {
         setCuidados(cuidadosDefault);
         localStorage.setItem("cuidados15dias", JSON.stringify(cuidadosDefault));
       } else {
@@ -39,6 +46,7 @@ export default function Page15() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
+  // SALVAR ALTERAÇÕES NO LOCALSTORAGE
   useEffect(() => {
     if (cuidados.length > 0) {
       localStorage.setItem("cuidados15dias", JSON.stringify(cuidados));
@@ -49,6 +57,7 @@ export default function Page15() {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
+
     setCuidados((prev) => [...prev, { nome: v, data: "" }]);
     setNome("");
     setAdicionando(false);
@@ -86,13 +95,16 @@ export default function Page15() {
 
   const gerarProximasDatas = (dataInicial) => {
     if (!dataInicial) return [];
+
     const datas = [];
     const inicio = new Date(dataInicial);
+
     for (let i = 0; i < 6; i++) {
       const nova = new Date(inicio);
       nova.setDate(inicio.getDate() + i * 15);
       datas.push(nova.toLocaleDateString("pt-BR"));
     }
+
     return datas;
   };
 
@@ -111,20 +123,9 @@ export default function Page15() {
         <h1 className={styles.title}>A cada 15 dias</h1>
 
         <div className={styles.rightHeader}>
-          <button
-            className={styles.addBtn}
-            onClick={() => setAdicionando(true)}
-          >
+          <button className={styles.addBtn} onClick={() => setAdicionando(true)}>
             +
           </button>
-
-          <Link href="/home" className={styles.homeLink}>
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
         </div>
       </header>
 

@@ -16,7 +16,7 @@ export default function Page30() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // 🔥 SEMPRE carregar apenas "Pausa do Esmalte"
+ 
   useEffect(() => {
     const cuidadoUnico = [{ nome: "Pausa do Esmalte", data: "" }];
 
@@ -98,13 +98,7 @@ export default function Page30() {
             +
           </button>
 
-          <Link href="/home" className={styles.homeLink} aria-label="Home" title="Home">
-            <img
-              src="https://i.pinimg.com/736x/b3/cc/d5/b3ccd57b054a73af1a0d281265b54ec8.jpg"
-              alt="Home"
-              className={styles.iconRound}
-            />
-          </Link>
+         
         </div>
       </header>
 

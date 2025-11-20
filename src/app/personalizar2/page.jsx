@@ -84,7 +84,7 @@ export default function Personalizar1() {
             +
           </button>
 
-        
+         
         </div>
       </header>
 
@@ -183,7 +183,7 @@ export default function Personalizar1() {
         )}
       </section>
 
-      <Link href="/corpo" className={styles.salvarBtn}>
+      <Link href="/cabelo" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>

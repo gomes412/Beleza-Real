@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-export default function Personalizar1() {
+// Só o cuidado fixo novo — removi "Pausa do Esmalte"
+const cuidadosFixos = [
+  "Corte de manutenção (aparar ~1-2cm ou remover pontas danificadas)"
+];
+
+export default function Page30() {
   const router = useRouter();
 
   const [cuidados, setCuidados] = useState([]);
@@ -15,25 +20,50 @@ export default function Personalizar1() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    const armazenados = localStorage.getItem("personalizar1");
-    if (armazenados) setCuidados(JSON.parse(armazenados));
+    const armazenados = localStorage.getItem("cuidados30dias");
+
+    // cria lista inicial a partir dos cuidadosFixos
+    const listaInicial = cuidadosFixos.map((c) => ({ nome: c, data: "" }));
+
+    if (armazenados) {
+      try {
+        const lista = JSON.parse(armazenados);
+
+        // compara só os nomes para detectar mudanças nos defaults
+        const nomesSalvos = JSON.stringify(lista.map((c) => c.nome));
+        const nomesFixos = JSON.stringify(cuidadosFixos);
+
+        if (nomesSalvos !== nomesFixos) {
+          // sobrescreve com os fixos (evita manter cuidados antigos)
+          setCuidados(listaInicial);
+          localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
+        } else {
+          setCuidados(lista);
+        }
+      } catch (err) {
+        // se arquivo corrompido, recria
+        setCuidados(listaInicial);
+        localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
+      }
+    } else {
+      // primeira vez: salva os fixos
+      setCuidados(listaInicial);
+      localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
+    }
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("personalizar1", JSON.stringify(cuidados));
+    localStorage.setItem("cuidados30dias", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
-    setCuidados((prev) => [
-      ...prev,
-      { nome: v, data: "", repetir: "uma-vez" },
-    ]);
+    setCuidados((prev) => [...prev, { nome: v, data: "" }]);
     setNome("");
     setAdicionando(false);
   };
@@ -48,31 +78,48 @@ export default function Personalizar1() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
+  const irDuvida = (cuidado, e) => {
+    if (e) e.stopPropagation();
+    const caminho = `/duvida-${cuidado
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+    router.push(caminho);
+  };
+
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
     );
   };
 
-  const handleRepetirChange = (index, value) => {
-    setCuidados((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, repetir: value } : item))
-    );
+  const gerarProximasDatas = (dataInicial) => {
+    if (!dataInicial) return [];
+    const datas = [];
+    const inicio = new Date(dataInicial);
+    for (let i = 0; i < 6; i++) {
+      const nova = new Date(inicio);
+      nova.setDate(inicio.getDate() + i * 30);
+      datas.push(nova.toLocaleDateString("pt-BR"));
+    }
+    return datas;
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.profile}>
+          {/* imagem local enviada por você */}
           <img
-            src="https://i.pinimg.com/736x/b3/90/ed/b390eddde26af7269b0f2c9eb566f59e.jpg"
+            src="/mnt/data/017f9073-488e-4e86-a634-64695fa960e0.jpg"
             alt="Bonequinha"
             className={styles.logo}
           />
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>Personalizar Cuidados</h1>
+        <h1 className={styles.title}>A cada 30 dias</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -83,8 +130,6 @@ export default function Personalizar1() {
           >
             +
           </button>
-
-        
         </div>
       </header>
 
@@ -107,7 +152,6 @@ export default function Personalizar1() {
                       display: "flex",
                       alignItems: "center",
                       gap: "8px",
-                      flexWrap: "wrap",
                     }}
                   >
                     <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
@@ -126,25 +170,45 @@ export default function Personalizar1() {
                         fontSize: "0.95rem",
                       }}
                     />
+                  </div>
 
-                    <select
-                      value={item.repetir}
-                      onChange={(e) => handleRepetirChange(idx, e.target.value)}
+                  {item.data && (
+                    <div
                       style={{
-                        padding: "4px 8px",
-                        borderRadius: "6px",
-                        border: "1px solid #cbb",
-                        fontFamily: "serif",
-                        fontSize: "0.95rem",
+                        marginTop: "6px",
+                        fontFamily: "Kotta One, serif",
+                        fontSize: "0.9rem",
+                        color: "#333",
                       }}
                     >
-                      <option value="uma-vez">Uma vez</option>
-                      <option value="repetir-mes">Repetir todo mês</option>
-                    </select>
-                  </div>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "#b18b8b",
+                          display: "block",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        Próximas datas:
+                      </span>
+                      <ul style={{ marginLeft: "18px", marginTop: "2px" }}>
+                        {gerarProximasDatas(item.data).map((data, i) => (
+                          <li key={i}>{data}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.itemActions}>
+                  <button
+                    className={styles.duvidaBtn}
+                    onClick={(e) => irDuvida(item.nome, e)}
+                    aria-label={`Dúvida sobre ${item.nome}`}
+                  >
+                    ?
+                  </button>
+
                   {selecionado === idx && (
                     <button
                       className={styles.excluirBtn}
@@ -183,7 +247,7 @@ export default function Personalizar1() {
         )}
       </section>
 
-      <Link href="/corpo" className={styles.salvarBtn}>
+      <Link href="/cabelo" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>
