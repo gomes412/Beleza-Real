@@ -6,15 +6,13 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 const cuidadosDefault = [
-  "Esfoliação",
-  "Depilação",
-  "Hidratante com óleo",
-  "Massagem corporal",
+  "Esfoliação corporal leve",
+  "Aplicar óleo corporal ou tratamento nutritivo intensivo",
 ];
 
-
 const diasSemana = [
-  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
+  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
+  "Quinta-feira", "Sexta-feira", "Sábado"
 ];
 
 export default function Page() {
@@ -26,25 +24,23 @@ export default function Page() {
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
-  const [diaSelecionado, setDiaSelecionado] = useState("");  
+  const [diaSelecionado, setDiaSelecionado] = useState("");
 
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados7dias3");
-    if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
-    }
+    // Sempre começa com os dois cuidados novos
+    localStorage.setItem("cuidados7dias3", JSON.stringify(cuidadosDefault));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
 
     const diaSalvo = localStorage.getItem("diaSelecionado");
-    if (diaSalvo) setDiaSelecionado(diaSalvo); 
+    if (diaSalvo) setDiaSelecionado(diaSalvo);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cuidados7dias3", JSON.stringify(cuidados));
     if (diaSelecionado) {
-      localStorage.setItem("diaSelecionado", diaSelecionado);  
+      localStorage.setItem("diaSelecionado", diaSelecionado);
     }
   }, [cuidados, diaSelecionado]);
 
@@ -68,14 +64,21 @@ export default function Page() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  
   const selecionarDia = (dia) => {
-    setDiaSelecionado(dia); 
+    setDiaSelecionado(dia);
   };
 
+  // 🔥 FUNÇÃO CORRIGIDA (remove acentos e cria URL limpa)
   const irDuvida = (item, e) => {
     if (e) e.stopPropagation();
-    router.push(`/duvida-${item.toLowerCase().replace(/\s+/g, "-")}`);
+
+    const semAcento = item
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+
+    const slug = semAcento.toLowerCase().replace(/\s+/g, "-");
+
+    router.push(`/duvida-${slug}`);
   };
 
   return (
@@ -105,8 +108,6 @@ export default function Page() {
           >
             +
           </button>
-
-        
         </div>
       </header>
 
@@ -176,7 +177,9 @@ export default function Page() {
           {diasSemana.map((dia, index) => (
             <button
               key={index}
-              className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
+              className={`${styles.diaBtn} ${
+                diaSelecionado === dia ? styles.diaSelecionado : ""
+              }`}
               onClick={() => selecionarDia(dia)}
             >
               {dia}

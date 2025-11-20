@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+// ====== ÚNICO CUIDADO FIXO ======
 const cuidadosFixos = [
-  "Esfoliação mais profunda",
-  "Trocar lâmina de depilação",
-  "Creme para estrias e celulites",
+  "Máscara corporal ou envoltório de corpo (body wrap)",
 ];
 
 export default function Page15_3() {
@@ -27,28 +26,52 @@ export default function Page15_3() {
       cuidadosSalvos = JSON.parse(armazenados);
     }
 
+    // ===== REMOVE QUALQUER CUIDADO ANTIGO =====
+    const removerNomesAntigos = [
+      "esfoliacao mais profunda",
+      "trocar lamina de depilacao",
+      "creme para estrias e celulites",
+      "aplicar oleo corporal ou tratamento nutritivo intensivo",
+      "mascara corporal ou envoltorio de corpo",
+      "mascara corporal ou envoltorio de corpo (body wrap)",
+    ];
 
+    const cuidadosCorrigidos = cuidadosSalvos.filter((item) => {
+      if (!item.nome) return false;
+
+      const nomeLimpo = item.nome
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+
+      return !removerNomesAntigos.some((n) => nomeLimpo.startsWith(n));
+    });
+
+    // ===== GARANTE QUE O CUIDADO FIXO APAREÇA UMA VEZ =====
     const cuidadosCompletos = cuidadosFixos.map((c) => {
-      const achado = cuidadosSalvos.find((item) => item.nome === c);
+      const achado = cuidadosCorrigidos.find((item) => item.nome === c);
       return achado ? achado : { nome: c, data: "" };
     });
 
-   
-    const adicionais = cuidadosSalvos.filter(
+    // Mantém cuidados adicionados pelo usuário (se algum dia tiver)
+    const adicionais = cuidadosCorrigidos.filter(
       (item) => item.nome && !cuidadosFixos.includes(item.nome)
     );
 
-    setCuidados([...cuidadosCompletos, ...adicionais]);
+    const final = [...cuidadosCompletos, ...adicionais];
+    setCuidados(final);
+
+    // atualiza localStorage
+    localStorage.setItem("cuidados15dias3", JSON.stringify(final));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-
   useEffect(() => {
     localStorage.setItem("cuidados15dias3", JSON.stringify(cuidados));
   }, [cuidados]);
-
 
   const handleAdicionar = (e) => {
     e.preventDefault();
@@ -59,32 +82,31 @@ export default function Page15_3() {
     setAdicionando(false);
   };
 
-  
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((prev) => prev.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
-
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
+    const caminho = `/duvida-${cuidado
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-")}`;
     router.push(caminho);
   };
 
- 
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
     );
   };
-
 
   const gerarProximasDatas = (dataInicial) => {
     if (!dataInicial) return [];
@@ -100,7 +122,6 @@ export default function Page15_3() {
 
   return (
     <div className={styles.container}>
-   
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
@@ -108,7 +129,9 @@ export default function Page15_3() {
             alt="Bonequinha"
             className={styles.logo}
           />
-          <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
+          <span className={styles.profileName}>
+            {nomeUsuario || "Usuário"}
+          </span>
         </div>
 
         <h1 className={styles.title}>A cada 15 dias</h1>
@@ -122,12 +145,9 @@ export default function Page15_3() {
           >
             +
           </button>
-
-          
         </div>
       </header>
 
- 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
           {cuidados
@@ -140,7 +160,6 @@ export default function Page15_3() {
               >
                 <div style={{ flex: 1 }}>
                   <span className={styles.cuidadoText}>{item.nome}</span>
-
 
                   <div
                     style={{
@@ -168,7 +187,6 @@ export default function Page15_3() {
                     />
                   </div>
 
-              
                   {item.data && (
                     <div
                       style={{
@@ -220,7 +238,6 @@ export default function Page15_3() {
             ))}
         </ul>
 
-      
         {adicionando && (
           <div className={styles.addSection}>
             <input

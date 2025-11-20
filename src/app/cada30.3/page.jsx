@@ -5,11 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
+// ✅ AGORA SÓ EXISTE ESSE CUIDADO FIXO
 const cuidadosFixos = [
-  "Limpeza profunda do corpo",
-  "Check de roupas íntimas",
-  "Depilação completa",
+  "Depilação",
 ];
 
 export default function Page30_1() {
@@ -21,30 +19,22 @@ export default function Page30_1() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados30dias1");
-    let cuidadosSalvos = [];
-    if (armazenados) {
-      cuidadosSalvos = JSON.parse(armazenados);
-    }
+    // APAGA TUDO DO LOCALSTORAGE
+    localStorage.removeItem("cuidados30dias1");
 
-    const cuidadosCompletos = cuidadosFixos.map((c) => {
-      const achado = cuidadosSalvos.find((item) => item.nome === c);
-      return achado ? achado : { nome: c, data: "" };
-    });
+    // cria somente o cuidado "Depilação"
+    const cuidadosCompletos = cuidadosFixos.map((c) => ({
+      nome: c,
+      data: "",
+    }));
 
-    const adicionais = cuidadosSalvos.filter(
-      (item) => item.nome && !cuidadosFixos.includes(item.nome)
-    );
-
-    setCuidados([...cuidadosCompletos, ...adicionais]);
+    setCuidados(cuidadosCompletos);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  
   useEffect(() => {
     localStorage.setItem("cuidados30dias1", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -68,10 +58,10 @@ export default function Page30_1() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
+  // ✅ SEM ACENTOS / SEM NOME DOS CUIDADOS / ROTA FIXA
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
+    router.push("/duvida-depilacao");
   };
 
   const handleDataChange = (index, value) => {
@@ -115,8 +105,6 @@ export default function Page30_1() {
           >
             +
           </button>
-
-         
         </div>
       </header>
 

@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+// ✔ NOVOS CUIDADOS FIXOS
 const cuidadosDefault = [
-  "Lavar",
-  "Tônico",
-  "Hidratante",
-  
+  "Hidratar a pele",
+  "Proteção solar",
+  "Aplicar sérum ou tratamento específico (ex: vitamina C, niacinamida) pela manhã",
+  "Aplicar creme de noite ou tratamento noturno (ex: retinol, reparador)",
 ];
 
 export default function TodoDia4() {
@@ -23,10 +24,9 @@ export default function TodoDia4() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidadosTodoDia4");
-    if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
-    }
+    // ✔ LIMPA LOCALSTORAGE E REDEFINE APENAS OS NOVOS CUIDADOS
+    localStorage.removeItem("cuidadosTodoDia4");
+    setCuidados(cuidadosDefault);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
@@ -56,9 +56,25 @@ export default function TodoDia4() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  const irDuvida = (e) => {
+  // ✔ NOVA FUNÇÃO: REDIRECIONA PARA /duvida-nome-do-cuidado
+  const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    router.push("/duvidaTodoDia4");
+
+    // remove acentos
+    let nomeFormatado = cuidado
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[()]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-");
+
+    // ✔ Se o nome ficar gigante, corta deixando curto e limpo
+    if (nomeFormatado.length > 30) {
+      nomeFormatado = nomeFormatado.substring(0, 30).replace(/-+$/, "");
+    }
+
+    router.push(`/duvida-${nomeFormatado}`);
   };
 
   return (
@@ -88,13 +104,11 @@ export default function TodoDia4() {
           >
             +
           </button>
-          
         </div>
       </header>
 
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
-         
           {cuidados.map((item, idx) => (
             <li
               key={idx}
@@ -106,10 +120,7 @@ export default function TodoDia4() {
               <div className={styles.itemActions}>
                 <button
                   className={styles.duvidaBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    irDuvida(e);
-                  }}
+                  onClick={(e) => irDuvida(item, e)}
                   aria-label={`Dúvida sobre ${item}`}
                 >
                   ?
@@ -127,24 +138,6 @@ export default function TodoDia4() {
               </div>
             </li>
           ))}
-
-   
-          <li className={styles.cuidadoItem}>
-            <span className={styles.cuidadoText}>Protetor solar</span>
-
-            <div className={styles.itemActions}>
-              <button
-                className={styles.duvidaBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  irDuvida(e);
-                }}
-                aria-label="Dúvida sobre Protetor solar"
-              >
-                ?
-              </button>
-            </div>
-          </li>
         </ul>
 
         {adicionando && (
