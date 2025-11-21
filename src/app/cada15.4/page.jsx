@@ -5,11 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-
 const cuidadosFixos = [
-  "Limpeza de cravos",
-  "Máscara calmante",
-  "Uso de óleo facial nutritivo",
+  "Tratamento intensivo para manchas ou linhas (ex: sérum ou máscara de tratamento específico)",
 ];
 
 export default function Page15Face() {
@@ -21,32 +18,20 @@ export default function Page15Face() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
- 
   useEffect(() => {
-    const armazenados = localStorage.getItem("cuidados15diasFace");
-    let cuidadosSalvos = [];
-    if (armazenados) {
-      cuidadosSalvos = JSON.parse(armazenados);
-    }
+    localStorage.removeItem("cuidados15diasFace");
 
+    const cuidadosCompletos = cuidadosFixos.map((c) => ({
+      nome: c,
+      data: "",
+    }));
 
-    const cuidadosCompletos = cuidadosFixos.map((c) => {
-      const achado = cuidadosSalvos.find((item) => item.nome === c);
-      return achado ? achado : { nome: c, data: "" };
-    });
-
-   
-    const adicionais = cuidadosSalvos.filter(
-      (item) => item.nome && !cuidadosFixos.includes(item.nome)
-    );
-
-    setCuidados([...cuidadosCompletos, ...adicionais]);
+    setCuidados(cuidadosCompletos);
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
- 
   useEffect(() => {
     localStorage.setItem("cuidados15diasFace", JSON.stringify(cuidados));
   }, [cuidados]);
@@ -60,14 +45,12 @@ export default function Page15Face() {
     setAdicionando(false);
   };
 
-  
   const handleExcluir = (index, e) => {
     if (e) e.stopPropagation();
     setCuidados((prev) => prev.filter((_, i) => i !== index));
     if (selecionado === index) setSelecionado(null);
   };
 
- 
   const toggleSelecionado = (index) => {
     setSelecionado((s) => (s === index ? null : index));
   };
@@ -75,11 +58,9 @@ export default function Page15Face() {
   
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
+    router.push("/duvida-tratamento-intensivo-para-manchas");
   };
 
-  
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
@@ -100,7 +81,6 @@ export default function Page15Face() {
 
   return (
     <div className={styles.container}>
-      
       <header className={styles.header}>
         <div className={styles.profile}>
           <img
@@ -117,110 +97,84 @@ export default function Page15Face() {
           <button
             className={styles.addBtn}
             onClick={() => setAdicionando(true)}
-            aria-label="Adicionar cuidado"
-            title="Adicionar"
           >
             +
           </button>
-
-         
         </div>
       </header>
 
-   
       <section className={styles.listSection}>
         <ul className={styles.cuidadosList}>
-          {cuidados
-            .filter((item) => item.nome && item.nome.trim() !== "")
-            .map((item, idx) => (
-              <li
-                key={idx}
-                className={styles.cuidadoItem}
-                onClick={() => toggleSelecionado(idx)}
-              >
-                <div style={{ flex: 1 }}>
-                  <span className={styles.cuidadoText}>{item.nome}</span>
+          {cuidados.map((item, idx) => (
+            <li
+              key={idx}
+              className={styles.cuidadoItem}
+              onClick={() => toggleSelecionado(idx)}
+            >
+              <div style={{ flex: 1 }}>
+                <span className={styles.cuidadoText}>{item.nome}</span>
 
-                 
-                  <div
-                    style={{
-                      marginTop: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
-                      Escolher data:
-                    </label>
-                    <input
-                      type="date"
-                      value={item.data || ""}
-                      onChange={(e) => handleDataChange(idx, e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
+                <div
+                  style={{
+                    marginTop: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
+                    Escolher data:
+                  </label>
+                  <input
+                    type="date"
+                    value={item.data || ""}
+                    onChange={(e) => handleDataChange(idx, e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+
+                {item.data && (
+                  <div style={{ marginTop: "6px", fontSize: "0.9rem" }}>
+                    <span
                       style={{
-                        padding: "4px 8px",
-                        borderRadius: "6px",
-                        border: "1px solid #cbb",
-                        fontFamily: "serif",
-                        fontSize: "0.95rem",
+                        fontWeight: "bold",
+                        color: "#b18b8b",
+                        display: "block",
+                        marginBottom: "2px",
                       }}
-                    />
+                    >
+                      Próximas datas:
+                    </span>
+                    <ul style={{ marginLeft: "18px" }}>
+                      {gerarProximasDatas(item.data).map((data, i) => (
+                        <li key={i}>{data}</li>
+                      ))}
+                    </ul>
                   </div>
+                )}
+              </div>
 
-                
-                  {item.data && (
-                    <div
-                      style={{
-                        marginTop: "6px",
-                        fontFamily: "Kotta One, serif",
-                        fontSize: "0.9rem",
-                        color: "#333",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "#b18b8b",
-                          display: "block",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        Próximas datas:
-                      </span>
-                      <ul style={{ marginLeft: "18px", marginTop: "2px" }}>
-                        {gerarProximasDatas(item.data).map((data, i) => (
-                          <li key={i}>{data}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+              <div className={styles.itemActions}>
+                <button
+                  className={styles.duvidaBtn}
+                  onClick={(e) => irDuvida(item.nome, e)}
+                >
+                  ?
+                </button>
 
-                <div className={styles.itemActions}>
+                {selecionado === idx && (
                   <button
-                    className={styles.duvidaBtn}
-                    onClick={(e) => irDuvida(item.nome, e)}
-                    aria-label={`Dúvida sobre ${item.nome}`}
+                    className={styles.excluirBtn}
+                    onClick={(e) => handleExcluir(idx, e)}
                   >
-                    ?
+                    Excluir
                   </button>
-
-                  {selecionado === idx && (
-                    <button
-                      className={styles.excluirBtn}
-                      onClick={(e) => handleExcluir(idx, e)}
-                      aria-label={`Excluir ${item.nome}`}
-                    >
-                      Excluir
-                    </button>
-                  )}
-                </div>
-              </li>
-            ))}
+                )}
+              </div>
+            </li>
+          ))}
         </ul>
 
-      
         {adicionando && (
           <div className={styles.addSection}>
             <input
@@ -229,9 +183,11 @@ export default function Page15Face() {
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
+
             <button className={styles.confirmAddBtn} onClick={handleAdicionar}>
               Adicionar
             </button>
+
             <button
               className={styles.cancelAddBtn}
               onClick={() => {

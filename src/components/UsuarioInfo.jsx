@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 import { useEffect, useState } from "react";
 import styles from "./UsuarioInfo.module.css";
 
@@ -32,4 +32,4 @@ export default function UsuarioInfo() {
       </button>
     </div>
   );
-}
+}*/

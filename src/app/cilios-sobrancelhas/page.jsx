@@ -5,12 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// ✔ NOVO E ÚNICO CUIDADO FIXO
-const cuidadosFixos = [
-  "Pausa ou detox de certos produtos ativos se necessário",
-];
-
-export default function Page30Rosto() {
+export default function Personalizar1() {
   const router = useRouter();
 
   const [cuidados, setCuidados] = useState([]);
@@ -20,30 +15,25 @@ export default function Page30Rosto() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    // ✔ Remove totalmente os cuidados antigos
-    localStorage.removeItem("cuidados30diasRosto");
-
-    // ✔ Adiciona apenas o novo cuidado fixo
-    const cuidadosCompletos = cuidadosFixos.map((c) => ({
-      nome: c,
-      data: "",
-    }));
-
-    setCuidados(cuidadosCompletos);
+    const armazenados = localStorage.getItem("personalizar1");
+    if (armazenados) setCuidados(JSON.parse(armazenados));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cuidados30diasRosto", JSON.stringify(cuidados));
+    localStorage.setItem("personalizar1", JSON.stringify(cuidados));
   }, [cuidados]);
 
   const handleAdicionar = (e) => {
     e.preventDefault();
     const v = nome.trim();
     if (!v) return;
-    setCuidados((prev) => [...prev, { nome: v, data: "" }]);
+    setCuidados((prev) => [
+      ...prev,
+      { nome: v, data: "", repetir: "uma-vez" },
+    ]);
     setNome("");
     setAdicionando(false);
   };
@@ -58,28 +48,16 @@ export default function Page30Rosto() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // ✔ SEMPRE ABRE /duvida-pausa-ou-detox-de-certos
-  const irDuvida = (cuidado, e) => {
-    if (e) e.stopPropagation();
-    router.push("/duvida-pausa-ou-detox-de-certos");
-  };
-
   const handleDataChange = (index, value) => {
     setCuidados((prev) =>
       prev.map((item, i) => (i === index ? { ...item, data: value } : item))
     );
   };
 
-  const gerarProximasDatas = (dataInicial) => {
-    if (!dataInicial) return [];
-    const datas = [];
-    const inicio = new Date(dataInicial);
-    for (let i = 0; i < 6; i++) {
-      const nova = new Date(inicio);
-      nova.setDate(inicio.getDate() + i * 30);
-      datas.push(nova.toLocaleDateString("pt-BR"));
-    }
-    return datas;
+  const handleRepetirChange = (index, value) => {
+    setCuidados((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, repetir: value } : item))
+    );
   };
 
   return (
@@ -94,7 +72,7 @@ export default function Page30Rosto() {
           <span className={styles.profileName}>{nomeUsuario || "Usuário"}</span>
         </div>
 
-        <h1 className={styles.title}>A cada 30 dias</h1>
+        <h1 className={styles.title}>cílios-sobrancelhas</h1>
 
         <div className={styles.rightHeader}>
           <button
@@ -105,6 +83,8 @@ export default function Page30Rosto() {
           >
             +
           </button>
+
+         
         </div>
       </header>
 
@@ -127,6 +107,7 @@ export default function Page30Rosto() {
                       display: "flex",
                       alignItems: "center",
                       gap: "8px",
+                      flexWrap: "wrap",
                     }}
                   >
                     <label style={{ fontSize: "0.95rem", color: "#b18b8b" }}>
@@ -145,45 +126,25 @@ export default function Page30Rosto() {
                         fontSize: "0.95rem",
                       }}
                     />
-                  </div>
 
-                  {item.data && (
-                    <div
+                    <select
+                      value={item.repetir}
+                      onChange={(e) => handleRepetirChange(idx, e.target.value)}
                       style={{
-                        marginTop: "6px",
-                        fontFamily: "Kotta One, serif",
-                        fontSize: "0.9rem",
-                        color: "#333",
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        border: "1px solid #cbb",
+                        fontFamily: "serif",
+                        fontSize: "0.95rem",
                       }}
                     >
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "#b18b8b",
-                          display: "block",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        Próximas datas:
-                      </span>
-                      <ul style={{ marginLeft: "18px", marginTop: "2px" }}>
-                        {gerarProximasDatas(item.data).map((data, i) => (
-                          <li key={i}>{data}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                      <option value="uma-vez">Uma vez</option>
+                      <option value="repetir-mes">Repetir todo mês</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className={styles.itemActions}>
-                  <button
-                    className={styles.duvidaBtn}
-                    onClick={(e) => irDuvida(item.nome, e)}
-                    aria-label={`Dúvida sobre ${item.nome}`}
-                  >
-                    ?
-                  </button>
-
                   {selecionado === idx && (
                     <button
                       className={styles.excluirBtn}
@@ -222,7 +183,7 @@ export default function Page30Rosto() {
         )}
       </section>
 
-      <Link href="/rosto" className={styles.salvarBtn}>
+      <Link href="/calendario" className={styles.salvarBtn}>
         Voltar
       </Link>
     </div>

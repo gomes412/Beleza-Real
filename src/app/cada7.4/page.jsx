@@ -5,15 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
+
 const cuidadosDefault = [
-  "Esfoliação suave",
-  "Máscara facial de argila",
-  "Máscara hidratante",
-  "Massagem facial",
+  "Esfoliação leve",
+  "Máscara facial (hidratante, detox ou clarificante)",
+  "Aplicar tratamento para olhos ou contorno labial mais intensivo",
 ];
 
 const diasSemana = [
-  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", 
+  "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
   "Quinta-feira", "Sexta-feira", "Sábado"
 ];
 
@@ -26,25 +26,29 @@ export default function Page7Face() {
   const [adicionando, setAdicionando] = useState(false);
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
-  const [diaSelecionado, setDiaSelecionado] = useState(""); 
+  const [diaSelecionado, setDiaSelecionado] = useState("");
 
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados7diasFace");
+
+    
     if (armazenados) {
-      setCuidados(JSON.parse(armazenados));
+      localStorage.removeItem("cuidados7diasFace");
+      setCuidados(cuidadosDefault);
+      localStorage.setItem("cuidados7diasFace", JSON.stringify(cuidadosDefault));
     }
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
 
     const diaSalvo = localStorage.getItem("diaSelecionadoFace");
-    if (diaSalvo) setDiaSelecionado(diaSalvo); 
+    if (diaSalvo) setDiaSelecionado(diaSalvo);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cuidados7diasFace", JSON.stringify(cuidados));
     if (diaSelecionado) {
-      localStorage.setItem("diaSelecionadoFace", diaSelecionado); 
+      localStorage.setItem("diaSelecionadoFace", diaSelecionado);
     }
   }, [cuidados, diaSelecionado]);
 
@@ -69,13 +73,28 @@ export default function Page7Face() {
   };
 
   const selecionarDia = (dia) => {
-    setDiaSelecionado(dia); 
+    setDiaSelecionado(dia);
   };
+
 
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
-    const caminho = `/duvida-${cuidado.toLowerCase().replace(/\s+/g, "-")}`;
-    router.push(caminho);
+
+   
+    let texto = cuidado.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+   
+    texto = texto.toLowerCase();
+
+    texto = texto.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+   
+    if (texto.length > 30) {
+      const partes = texto.split("-");
+      texto = partes.slice(0, 4).join("-"); 
+    }
+
+    router.push(`/duvida-${texto}`);
   };
 
   return (
@@ -105,8 +124,6 @@ export default function Page7Face() {
           >
             +
           </button>
-
-          
         </div>
       </header>
 
@@ -176,7 +193,9 @@ export default function Page7Face() {
           {diasSemana.map((dia, index) => (
             <button
               key={index}
-              className={`${styles.diaBtn} ${diaSelecionado === dia ? styles.diaSelecionado : ''}`}
+              className={`${styles.diaBtn} ${
+                diaSelecionado === dia ? styles.diaSelecionado : ""
+              }`}
               onClick={() => selecionarDia(dia)}
             >
               {dia}
