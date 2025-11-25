@@ -6,14 +6,27 @@ export default function Personalize() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-   
-    const nome = localStorage.getItem("usuarioNome");
-    if (nome) setNomeUsuario(nome);
+    // Busca o nome salvo no localStorage
+    const raw = localStorage.getItem("usuarioNome");
+
+    if (!raw) {
+      setNomeUsuario("Usuária");
+      return;
+    }
+
+    try {
+      // Caso seja JSON, tenta converter
+      const parsed = JSON.parse(raw);
+      setNomeUsuario(parsed || "Usuária");
+    } catch {
+      // Caso seja texto simples
+      setNomeUsuario(raw);
+    }
   }, []);
 
   return (
     <div className={styles.container}>
-    
+      
       <header className={styles.header}>
         <div className={styles.userInfo}>
           <img
@@ -21,19 +34,18 @@ export default function Personalize() {
             alt="Ícone Usuário"
             className={styles.userIcon}
           />
-          <span className={styles.userName}>{nomeUsuario || "Usuário"}</span>
+          <span className={styles.userName}>
+            {nomeUsuario || "Usuária"}
+          </span>
         </div>
 
-        <div className={styles.headerIcons}>
-        </div>
+        <div className={styles.headerIcons}></div>
       </header>
 
-     
       <h2 className={styles.title}>Personalize seu Cronograma</h2>
 
-    
       <div className={styles.grid}>
-       
+        
         <div className={styles.leftColumn}>
           <a href="/unhas" className={styles.card}>
             <img src="https://i.pinimg.com/736x/e5/45/06/e545066514246f2c204d9b3ecf304af8.jpg" alt="Unhas" />
@@ -46,7 +58,7 @@ export default function Personalize() {
           </a>
 
           <a href="/corpo" className={styles.card}>
-            <img src="https://plus.unsplash.com/premium_vector-1721635430958-5809aaf5dae3?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pele" />
+            <img src="https://plus.unsplash.com/premium_vector-1721635430958-5809aaf5dae3?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Corpo" />
             <span>Corpo</span>
           </a>
 
@@ -56,7 +68,6 @@ export default function Personalize() {
           </a>
         </div>
 
-  
         <div className={styles.rightColumn}>
           <a href="/saude" className={styles.card}>
             <img src="https://i.pinimg.com/236x/c8/2d/78/c82d782a1c9225e1cb739f0762d6f288.jpg" alt="Saúde" />
@@ -69,13 +80,12 @@ export default function Personalize() {
           </a>
 
           <a href="/cilios-sobrancelhas" className={styles.card}>
-            <img src="https://i.pinimg.com/736x/fd/68/22/fd6822c031928df430324e66340718a6.jpg" alt="Cílios e sobrancelhas" />
+            <img src="https://i.pinimg.com/736x/fd/68/22/fd6822c031928df430324e66340718a6.jpg" alt="Cílios e Sobrancelhas" />
             <span>Cílios e Sobrancelhas</span>
           </a>
         </div>
       </div>
 
-   
       <a href="/diaria" className={styles.saveButton}>
         Salvar Cronogramas
       </a>

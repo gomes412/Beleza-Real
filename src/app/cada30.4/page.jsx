@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// ✔ NOVO E ÚNICO CUIDADO FIXO
+
 const cuidadosFixos = [
   "Pausa ou detox de certos produtos ativos se necessário",
 ];
@@ -20,10 +20,10 @@ export default function Page30Rosto() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    // ✔ Remove totalmente os cuidados antigos
+   
     localStorage.removeItem("cuidados30diasRosto");
 
-    // ✔ Adiciona apenas o novo cuidado fixo
+
     const cuidadosCompletos = cuidadosFixos.map((c) => ({
       nome: c,
       data: "",
@@ -58,7 +58,7 @@ export default function Page30Rosto() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // ✔ SEMPRE ABRE /duvida-pausa-ou-detox-de-certos
+ 
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
     router.push("/duvida-pausa-ou-detox-de-certos");

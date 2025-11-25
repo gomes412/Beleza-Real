@@ -27,7 +27,7 @@ export default function Page() {
   const [diaSelecionado, setDiaSelecionado] = useState("");
 
   useEffect(() => {
-    // Sempre começa com os dois cuidados novos
+    
     localStorage.setItem("cuidados7dias3", JSON.stringify(cuidadosDefault));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
@@ -68,7 +68,7 @@ export default function Page() {
     setDiaSelecionado(dia);
   };
 
-  // 🔥 FUNÇÃO CORRIGIDA (remove acentos e cria URL limpa)
+
   const irDuvida = (item, e) => {
     if (e) e.stopPropagation();
 

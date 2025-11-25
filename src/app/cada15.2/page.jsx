@@ -19,19 +19,19 @@ export default function Page15() {
   const [selecionado, setSelecionado] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
 
-  // CARREGAR DADOS DO LOCALSTORAGE
+  
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados15dias");
 
     if (armazenados) {
       const lista = JSON.parse(armazenados);
 
-      // Comparação REAL dos nomes
+     
       const nomesIguais =
         JSON.stringify(lista.map((c) => c.nome)) ===
         JSON.stringify(cuidadosDefault.map((c) => c.nome));
 
-      // Se os nomes mudaram → atualizar localStorage
+ 
       if (!nomesIguais) {
         setCuidados(cuidadosDefault);
         localStorage.setItem("cuidados15dias", JSON.stringify(cuidadosDefault));
@@ -46,7 +46,7 @@ export default function Page15() {
     if (nomeSalvo) setNomeUsuario(nomeSalvo);
   }, []);
 
-  // SALVAR ALTERAÇÕES NO LOCALSTORAGE
+ 
   useEffect(() => {
     if (cuidados.length > 0) {
       localStorage.setItem("cuidados15dias", JSON.stringify(cuidados));

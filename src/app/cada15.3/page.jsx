@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// ====== ÚNICO CUIDADO FIXO ======
+
 const cuidadosFixos = [
   "Máscara corporal ou envoltório de corpo (body wrap)",
 ];
@@ -26,7 +26,7 @@ export default function Page15_3() {
       cuidadosSalvos = JSON.parse(armazenados);
     }
 
-    // ===== REMOVE QUALQUER CUIDADO ANTIGO =====
+  
     const removerNomesAntigos = [
       "esfoliacao mais profunda",
       "trocar lamina de depilacao",
@@ -48,13 +48,13 @@ export default function Page15_3() {
       return !removerNomesAntigos.some((n) => nomeLimpo.startsWith(n));
     });
 
-    // ===== GARANTE QUE O CUIDADO FIXO APAREÇA UMA VEZ =====
+    
     const cuidadosCompletos = cuidadosFixos.map((c) => {
       const achado = cuidadosCorrigidos.find((item) => item.nome === c);
       return achado ? achado : { nome: c, data: "" };
     });
 
-    // Mantém cuidados adicionados pelo usuário (se algum dia tiver)
+   
     const adicionais = cuidadosCorrigidos.filter(
       (item) => item.nome && !cuidadosFixos.includes(item.nome)
     );
@@ -62,7 +62,7 @@ export default function Page15_3() {
     const final = [...cuidadosCompletos, ...adicionais];
     setCuidados(final);
 
-    // atualiza localStorage
+ 
     localStorage.setItem("cuidados15dias3", JSON.stringify(final));
 
     const nomeSalvo = localStorage.getItem("usuarioNome");

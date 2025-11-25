@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// ✅ AGORA SÓ EXISTE ESSE CUIDADO FIXO
+
 const cuidadosFixos = [
   "Depilação",
 ];
@@ -20,10 +20,10 @@ export default function Page30_1() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    // APAGA TUDO DO LOCALSTORAGE
+ 
     localStorage.removeItem("cuidados30dias1");
 
-    // cria somente o cuidado "Depilação"
+
     const cuidadosCompletos = cuidadosFixos.map((c) => ({
       nome: c,
       data: "",
@@ -58,7 +58,7 @@ export default function Page30_1() {
     setSelecionado((s) => (s === index ? null : index));
   };
 
-  // ✅ SEM ACENTOS / SEM NOME DOS CUIDADOS / ROTA FIXA
+  
   const irDuvida = (cuidado, e) => {
     if (e) e.stopPropagation();
     router.push("/duvida-depilacao");

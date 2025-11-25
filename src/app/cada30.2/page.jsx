@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-// Só o cuidado fixo novo — removi "Pausa do Esmalte"
+
 const cuidadosFixos = [
   "Corte de manutenção (aparar ~1-2cm ou remover pontas danificadas)"
 ];
@@ -22,31 +22,31 @@ export default function Page30() {
   useEffect(() => {
     const armazenados = localStorage.getItem("cuidados30dias");
 
-    // cria lista inicial a partir dos cuidadosFixos
+
     const listaInicial = cuidadosFixos.map((c) => ({ nome: c, data: "" }));
 
     if (armazenados) {
       try {
         const lista = JSON.parse(armazenados);
 
-        // compara só os nomes para detectar mudanças nos defaults
+        
         const nomesSalvos = JSON.stringify(lista.map((c) => c.nome));
         const nomesFixos = JSON.stringify(cuidadosFixos);
 
         if (nomesSalvos !== nomesFixos) {
-          // sobrescreve com os fixos (evita manter cuidados antigos)
+          
           setCuidados(listaInicial);
           localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
         } else {
           setCuidados(lista);
         }
       } catch (err) {
-        // se arquivo corrompido, recria
+        
         setCuidados(listaInicial);
         localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
       }
     } else {
-      // primeira vez: salva os fixos
+ 
       setCuidados(listaInicial);
       localStorage.setItem("cuidados30dias", JSON.stringify(listaInicial));
     }
@@ -110,7 +110,7 @@ export default function Page30() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.profile}>
-          {/* imagem local enviada por você */}
+         
           <img
             src="/mnt/data/017f9073-488e-4e86-a634-64695fa960e0.jpg"
             alt="Bonequinha"
