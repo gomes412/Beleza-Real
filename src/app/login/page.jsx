@@ -3,33 +3,31 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const router = useRouter();
 
-
- 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     if (!email || !senha) {
       setErro("Preencha todos os campos!");
       return;
     }
 
+    console.log("cheguei aqui");
 
-    const response = await fetch('/api/auth', {
-      method: 'POST',
+    const response = await fetch("/api/auth", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({email, senha}),
-    })
+      body: JSON.stringify({ email, senha }),
+    });
     const usuario = response.json();
+    console.log(usuario);
     if (!usuario) {
       setErro("usária não existe ou senha inválida!");
       return;
@@ -38,7 +36,6 @@ export default function Login() {
     alert(`Bem-vinda de volta, ${usuario.nome}!`);
     router.push("/calendario");
   };
-
 
   return (
     <div className={styles.container}>
@@ -54,7 +51,6 @@ export default function Login() {
             Organize sua rotina, realce sua essência!
           </p>
         </div>
-
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <input
@@ -72,15 +68,12 @@ export default function Login() {
             className={styles.input}
           />
 
-
           {erro && <p className={styles.error}>{erro}</p>}
-
 
           <button type="submit" className={styles.button}>
             Entrar
           </button>
         </form>
-
 
         <p className={styles.forgot}>
           <a href="/senha">Esqueceu a senha?</a>
