@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Kotta+One&display=swap');
+
+.container {
+  font-family: 'Kotta One', serif;
+  padding: 20px;
+  position: relative;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profileName {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.cycleButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  padding: 0;
+  margin-left: auto;
+}
+
+.cycleButton svg {
+  display: block;
+}
+
+.cycleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  background: rgba(217, 92, 102, 0.08);
+  border-color: rgba(217, 92, 102, 0.18);
+}
+
+.cycleButton:active {
+  transform: translateY(0);
+}
+
+
+.dateCenter {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0 30px 0;
+}
+
+.dateCenter p {
+  font-size: 18px;
+  color: #7a4b4b;
+  font-weight: 600;
+}
+
+
+.listSection {
+  margin-top: 10px;
+}
+
+.cuidadosList {
+  list-style-type: none;
+  padding: 0;
+}
+
+
+.cuidadoItem {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e4e4e4;
+  cursor: pointer;
+}
+
+
+.cuidadoBox {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+
+.cuidadoText {
+  margin-left: 12px;
+  color: #3a1f1f;
+  font-weight: 600;
+}

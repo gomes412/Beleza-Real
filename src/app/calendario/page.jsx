@@ -6,7 +6,7 @@ export default function Personalize() {
   const [nomeUsuario, setNomeUsuario] = useState("");
 
   useEffect(() => {
-    // Busca o nome salvo no localStorage
+    
     const raw = localStorage.getItem("usuarioNome");
 
     if (!raw) {
@@ -15,11 +15,11 @@ export default function Personalize() {
     }
 
     try {
-      // Caso seja JSON, tenta converter
+      
       const parsed = JSON.parse(raw);
       setNomeUsuario(parsed || "Usuária");
     } catch {
-      // Caso seja texto simples
+      
       setNomeUsuario(raw);
     }
   }, []);
