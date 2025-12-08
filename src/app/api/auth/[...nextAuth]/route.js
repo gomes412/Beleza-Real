@@ -1,14 +1,13 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
 import pool from "@/lib/db";
 
 async function getUserByEmail(email) {
   const client = await pool.connect();
   try {
     const res = await client.query(
-      "SELECT id, nome, email, senha_hash, rule FROM usuario WHERE email = $1",
+      "SELECT id, nome, email, senha, rule FROM usuario WHERE email = $1",
       [email]
     );
     const user = res.rows[0];
@@ -47,10 +46,10 @@ export const authOptions = {
         if (!email || !senha) return null;
 
         const user = await getUserByEmail(email);
-        if (!user || !user.senha_hash) return null;
+        if (!user || !user.senha) return null;
 
-        const ok = await compare(senha, user.senha_hash);
-        if (!ok) return null;
+        // Comparação sem hash (senha simples)
+        if (senha !== user.senha) return null;
 
         return {
           id: user.id,
@@ -63,10 +62,15 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async signIn({ account, profile }) {
+    async signIn({ account, profile, user }) {
       if (account?.provider === "google") {
-        const existing = await getUserByEmail(profile.email);
-        if (!existing) return false;
+        const email = profile?.email || user?.email || account?.email;
+        const existing = await getUserByEmail(email);
+
+        if (!existing) {
+          console.log("Usuário Google não existente:", email);
+          return false;
+        }
       }
       return true;
     },
