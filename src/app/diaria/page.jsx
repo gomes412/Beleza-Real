@@ -40,7 +40,7 @@ export default function PageTodosDias() {
   }, []);
 
  
-  const dataAtual = "terça-feira, 2 de dezembro de 2025";
+  const dataAtual = "quarta-feira, 17 de dezembro de 2025";
 
 
   const irParaCiclo2 = () => {
